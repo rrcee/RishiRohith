@@ -20,6 +20,8 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            /* Completely eliminates the blue tap highlight on mobile browsers */
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
@@ -48,7 +50,7 @@
             pointer-events: none;
         }
 
-        /* DYNAMIC BACKGROUND GRID - Pure depth, no glowing gradients */
+        /* DYNAMIC BACKGROUND GRID */
         .parallax-grid-bg {
             position: fixed;
             width: 120vw; height: 120vh;
@@ -296,10 +298,13 @@
             border-top: 1px solid rgba(216, 180, 254, 0.2); font-weight: 600; text-align: center; padding: 0 20px;
         }
 
-        /* --- MOBILE PERSPECTIVE MATRIX --- */
+        /* --- MOBILE PERSPECTIVE MATRIX WITH ANIMATED GRADIENT --- */
         @media (max-width: 768px) {
             body {
-                background: linear-gradient(180deg, #F5F3FF 0%, #EDE9FE 100%);
+                /* Continuous luxury fluid gradient sweep across the mobile system backdrop */
+                background: linear-gradient(-45deg, #F5F3FF, #EDE9FE, #E0D7FF, #F3E8FF);
+                background-size: 400% 400%;
+                animation: mobileFluidGradient 12s ease infinite;
             }
             section {
                 min-height: auto;
@@ -319,11 +324,21 @@
                 height: 350px;
                 padding: 24px;
             }
+            
+            /* Enhanced, more accessible scale optimization for iPod UI arrows on touch displays */
             .carousel-nav {
                 display: flex;
-                margin-top: -10px;
+                margin-top: -5px;
+                gap: 24px;
             }
-            .carousel-arrow { width: 38px; height: 38px; }
+            .carousel-arrow { 
+                width: 48px; 
+                height: 48px; 
+            }
+            .carousel-arrow svg {
+                width: 18px;
+                height: 18px;
+            }
             
             .languages-grid { flex-direction: column; width: 100%; gap: 14px; }
             .lang-pill { min-width: 100%; padding: 20px; }
@@ -334,6 +349,12 @@
             .about-box { padding: 30px 20px; text-align: center; }
             .nav-links { width: 100%; }
             .hero-title { margin-bottom: 12px; }
+        }
+
+        @keyframes mobileFluidGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
@@ -355,13 +376,12 @@
             <li><a href="#work" class="nav-tab">Work</a></li>
             <li><a href="#vision" class="nav-tab">Vision</a></li>
             <li><a href="#toolkit" class="nav-tab">Toolkit</a></li>
-            <li><a href="#network" class="nav-tab">Network</a></li>
+            <li><a href="#network" class="nav-tab">Reach Out</a></li>
         </ul>
     </header>
 
     <div class="scroll-stage">
         
-        <!-- SECTION 1: HOME -->
         <section id="home">
             <div class="hero-center">
                 <h1 class="hero-title">Rishi <span>Rohith</span></h1>
@@ -370,9 +390,8 @@
             </div>
         </section>
 
-        <!-- SECTION 2: WORK -->
         <section id="work">
-            <h2 class="section-title">Selected <span>Exhibits</span></h2>
+            <h2 class="section-title">Selected <span>Projects</span></h2>
             <div class="work-layout">
                 <div class="carousel-viewport" id="carouselViewport">
                     <div class="carousel-container" id="carouselContainer">
@@ -383,7 +402,7 @@
                                 <h3 class="project-name">FH5</h3>
                                 <p class="project-desc">Forza Horizon 5 in-game photography collection capturing high-speed telemetry, light, and automotive design.</p>
                             </div>
-                            <a href="https://rrcee.github.io/fh5/" target="_blank" class="project-btn">View Gallery</a>
+                            <a href="https://rrcee.github.io/fh5/" target="_blank" class="project-btn">Visit Site</a>
                         </div>
 
                         <div class="project-card glass-panel" data-index="1">
@@ -392,7 +411,7 @@
                                 <h3 class="project-name">Miles Morales</h3>
                                 <p class="project-desc">Spider-Man Miles Morales game-engine rendering and architectural composition gallery.</p>
                             </div>
-                            <a href="https://rrcee.github.io/milesmorales/" target="_blank" class="project-btn">View Gallery</a>
+                            <a href="https://rrcee.github.io/milesmorales/" target="_blank" class="project-btn">Visit Site</a>
                         </div>
 
                         <div class="project-card glass-panel" data-index="2">
@@ -436,17 +455,15 @@
             </div>
         </section>
 
-        <!-- SECTION 3: VISION -->
         <section id="vision">
             <h2 class="section-title">Artistic <span>Vision</span></h2>
             <div class="about-box glass-panel">
                 <p class="about-para">
-                    People often try to separate me into clean boxes—labeling me a <span class="highlight">photographer</span>, a <span class="highlight">video editor</span>, or a <span class="highlight">designer</span>. But those are just execution tools. At my core, I am an <span class="highlight">artist</span>. Whether manipulating framing in a lens, timing a cinematic sequence in post-production, or composing clean interface layouts, my ultimate goal is translating raw atmosphere and concept into balanced structural experiences.
+                    People often try to separate me into clean boxes labeling me a <span class="highlight">photographer</span>, a <span class="highlight">video editor</span>, or a <span class="highlight">designer</span>. But those are just execution tools. At my core, I am an <span class="highlight">artist</span>. Whether manipulating framing in a lens, timing a cinematic sequence in post-production, or composing clean interface layouts, my ultimate goal is translating raw atmosphere and concept into balanced structural experiences.
                 </p>
             </div>
         </section>
 
-        <!-- SECTION 4: TOOLKIT -->
         <section id="toolkit">
             <h2 class="section-title">Creative <span>Mediums</span></h2>
             <div class="languages-grid">
@@ -465,9 +482,8 @@
             </div>
         </section>
 
-        <!-- SECTION 5: NETWORK -->
         <section id="network">
-            <h2 class="section-title">Connect <span>Network</span></h2>
+            <h2 class="section-title">Reach <span>Out</span></h2>
             <div class="socials-grid">
                 <a href="https://discord.com" target="_blank" class="social-card glass-panel">
                     <span class="social-platform">Discord Terminal</span>
@@ -571,7 +587,7 @@
                 updateCarousel();
             }
 
-            /* --- TOUCH HANDLING MATRIX FOR PHONE USERBASES --- */
+            /* --- TOUCH HANDLING MATRIX --- */
             let touchStartX = 0;
             let touchEndX = 0;
 
