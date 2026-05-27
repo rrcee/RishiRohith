@@ -123,7 +123,7 @@
             transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* --- GLASS PANELS --- */
+        /* --- GLASS PANELS & SHIMMER LOADING PRESETS --- */
         .glass-panel {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(20px);
@@ -135,6 +135,35 @@
             transform-style: preserve-3d;
             backface-visibility: hidden;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s, background-color 0.3s;
+        }
+
+        /* LAZY-LOADED MEDIA SHIMMER LAYER */
+        .glass-panel.loading-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 23px;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            background-size: 200% 100%;
+            animation: cardShimmerSweep 1.6s infinite linear;
+            z-index: 5;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .glass-panel.loading-shimmer * {
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        @keyframes cardShimmerSweep {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         /* --- STICKY NAVIGATION HUD --- */
@@ -360,7 +389,6 @@
             width: 100%; height: 80px; display: flex; align-items: center; justify-content: center;
             font-size: 0.75rem; color: var(--text-sub); letter-spacing: 0.12em;
             border-top: 1px solid rgba(216, 180, 254, 0.2); font-weight: 600; text-align: center; padding: 0 20px;
-            margin-bottom: 0px;
         }
 
         /* --- MOBILE SCREEN MEDIA OVERRIDES --- */
@@ -371,7 +399,6 @@
                 animation: mobileFluidGradient 12s ease infinite;
             }
             
-            /* Hidden elements on mobile viewboards */
             .parallax-grid-bg, .hud-actions, .nav-links { display: none !important; }
             
             section {
@@ -392,7 +419,6 @@
                 padding: 24px;
             }
             
-            /* Bigger iPod control configuration */
             .carousel-nav {
                 display: flex;
                 margin-top: -5px;
@@ -428,7 +454,7 @@
                 padding-bottom: 110px;
             }
 
-            /* --- STUNNING BOTTOM SHELF NAVIGATION DESIGN --- */
+            /* BOTTOM SHELF NAVIGATION DESIGN */
             .mobile-hud-navigation {
                 display: flex;
                 position: fixed;
@@ -503,9 +529,9 @@
     <div class="blur-overlay"></div>
     <div class="parallax-grid-bg" id="parallaxGrid"></div>
 
-    <!-- AUDIO PLAYER ELEMENT (Muted by default to override explicit strict browser autoplay design restrictions) -->
+    <!-- LOCAL DIRECTORY AUDIO TRACK -->
     <audio id="bgMusicTrack" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="audio.mp3" type="audio/mpeg">
     </audio>
 
     <!-- LIVE DYNAMIC HUD TOGGLE CONTROLLER -->
@@ -575,7 +601,7 @@
                 <div class="carousel-viewport" id="carouselViewport">
                     <div class="carousel-container" id="carouselContainer">
                         
-                        <div class="project-card glass-panel" data-index="0">
+                        <div class="project-card glass-panel loading-shimmer" data-index="0">
                             <div>
                                 <div class="project-meta">Virtual Capture</div>
                                 <h3 class="project-name">FH5</h3>
@@ -584,7 +610,7 @@
                             <a href="https://rrcee.github.io/fh5/" target="_blank" class="project-btn">Visit Site</a>
                         </div>
 
-                        <div class="project-card glass-panel" data-index="1">
+                        <div class="project-card glass-panel loading-shimmer" data-index="1">
                             <div>
                                 <div class="project-meta">Cinematic Rendering</div>
                                 <h3 class="project-name">Miles Morales</h3>
@@ -593,7 +619,7 @@
                             <a href="https://rrcee.github.io/milesmorales/" target="_blank" class="project-btn">Visit Site</a>
                         </div>
 
-                        <div class="project-card glass-panel" data-index="2">
+                        <div class="project-card glass-panel loading-shimmer" data-index="2">
                             <div>
                                 <div class="project-meta">Web Ecosystem</div>
                                 <h3 class="project-name">Bronze Wagon</h3>
@@ -602,7 +628,7 @@
                             <a href="https://rrcee.github.io/bronze-wagon/" target="_blank" class="project-btn">Explore Platform</a>
                         </div>
 
-                        <div class="project-card glass-panel" data-index="3">
+                        <div class="project-card glass-panel loading-shimmer" data-index="3">
                             <div>
                                 <div class="project-meta">Education</div>
                                 <h3 class="project-name">Momentum Labs</h3>
@@ -611,7 +637,7 @@
                             <a href="https://rrcee.github.io/MomentumLabs/" target="_blank" class="project-btn">Explore Platform</a>
                         </div>
 
-                        <div class="project-card glass-panel" data-index="4">
+                        <div class="project-card glass-panel loading-shimmer" data-index="4">
                             <div>
                                 <div class="project-meta">Productivity</div>
                                 <h3 class="project-name">Pomo</h3>
@@ -637,7 +663,7 @@
         <!-- SECTION 3: VISION -->
         <section id="vision">
             <h2 class="section-title">Artistic <span>Vision</span></h2>
-            <div class="about-box glass-panel">
+            <div class="about-box glass-panel loading-shimmer">
                 <p class="about-para">
                     People often try to separate me into clean boxes labeling me a <span class="highlight">photographer</span>, a <span class="highlight">video editor</span>, or a <span class="highlight">designer</span>. But those are just execution tools. At my core, I am an <span class="highlight">artist</span>. Whether manipulating framing in a lens, timing a cinematic sequence in post-production, or composing clean interface layouts, my ultimate goal is translating raw atmosphere and concept into balanced structural experiences.
                 </p>
@@ -648,15 +674,15 @@
         <section id="toolkit">
             <h2 class="section-title">Creative <span>Mediums</span></h2>
             <div class="languages-grid">
-                <div class="lang-pill glass-panel">
+                <div class="lang-pill glass-panel loading-shimmer">
                     <span class="lang-title">Photography & Composition</span>
                     <span class="lang-proficiency">Visual Framing</span>
                 </div>
-                <div class="lang-pill glass-panel">
+                <div class="lang-pill glass-panel loading-shimmer">
                     <span class="lang-title">Videography & Motion</span>
                     <span class="lang-proficiency">Cinematography</span>
                 </div>
-                <div class="lang-pill glass-panel">
+                <div class="lang-pill glass-panel loading-shimmer">
                     <span class="lang-title">Post-Production Design</span>
                     <span class="lang-proficiency">Editing & Grading</span>
                 </div>
@@ -667,19 +693,19 @@
         <section id="network">
             <h2 class="section-title">Reach <span>Out</span></h2>
             <div class="socials-grid">
-                <a href="https://discord.com" target="_blank" class="social-card glass-panel">
+                <a href="https://discord.com" target="_blank" class="social-card glass-panel loading-shimmer">
                     <span class="social-platform">Discord Terminal</span>
                     <span class="social-handle">imthatmadman</span>
                 </a>
-                <a href="https://instagram.com/sherikum.rishi" target="_blank" class="social-card glass-panel">
+                <a href="https://instagram.com/sherikum.rishi" target="_blank" class="social-card glass-panel loading-shimmer">
                     <span class="social-platform">Instagram Profile</span>
                     <span class="social-handle">sherikum.rishi</span>
                 </a>
-                <a href="https://github.com/rrcee" target="_blank" class="social-card glass-panel">
+                <a href="https://github.com/rrcee" target="_blank" class="social-card glass-panel loading-shimmer">
                     <span class="social-platform">GitHub Repository</span>
                     <span class="social-handle">rrcee</span>
                 </a>
-                <a href="mailto:rishirohith2099@gmail.com" class="social-card glass-panel">
+                <a href="mailto:rishirohith2099@gmail.com" class="social-card glass-panel loading-shimmer">
                     <span class="social-platform">Direct Email</span>
                     <span class="social-handle">rishirohith</span>
                 </a>
@@ -695,36 +721,31 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            /* --- SECURE AUTOPLAY MUSIC ENGINE --- */
+            /* --- SCROLLING-TRIGGERED AUDIO ENGINE --- */
             const bgMusicTrack = document.getElementById('bgMusicTrack');
             const audioHudTrigger = document.getElementById('audioHudTrigger');
+            let isAudioActivated = false;
 
-            // Force browser audio activation via implicit triggers
-            function initiateAudioAutoplay() {
+            function triggerScrollAudioActivation() {
+                if (isAudioActivated) return;
+                
                 bgMusicTrack.play().then(() => {
+                    isAudioActivated = true;
                     audioHudTrigger.classList.remove('muted-state');
                     audioHudTrigger.classList.add('playing-state');
-                    removeAllAutoplayListeners();
+                    window.removeEventListener('scroll', triggerScrollAudioActivation);
                 }).catch((err) => {
-                    console.log("Autoplay blocked by browser security policy. Awaiting user interaction loop.");
+                    console.log("Autoplay blocked by standard browser constraints. Awaiting direct tap context.");
                 });
             }
 
-            function removeAllAutoplayListeners() {
-                window.removeEventListener('click', initiateAudioAutoplay);
-                window.removeEventListener('touchstart', initiateAudioAutoplay);
-                window.removeEventListener('scroll', initiateAudioAutoplay);
-            }
+            // Bind audio deployment exclusively to scroll vector mutations
+            window.addEventListener('scroll', triggerScrollAudioActivation, { passive: true });
 
-            // High-priority automatic trigger array execution
-            initiateAudioAutoplay();
-            window.addEventListener('click', initiateAudioAutoplay, { passive: true });
-            window.addEventListener('touchstart', initiateAudioAutoplay, { passive: true });
-            window.addEventListener('scroll', initiateAudioAutoplay, { passive: true });
-
-            // Direct HUD button interactivity management
+            // Direct HUD toggle management
             audioHudTrigger.addEventListener('click', (e) => {
                 e.stopPropagation();
+                isAudioActivated = true; // Protect scroll hook from re-firing
                 if (bgMusicTrack.paused) {
                     bgMusicTrack.play();
                     audioHudTrigger.classList.remove('muted-state');
@@ -736,7 +757,28 @@
                 }
             });
 
-            /* --- DESKTOP INTERACTIVE SCRIPTS --- */
+
+            /* --- LAZY-LOADED SHIMMER RESOLUTION ENGINE --- */
+            const shimmerTargets = document.querySelectorAll('.loading-shimmer');
+            
+            // Simulates dynamic layout ready state transitions after images/components assemble
+            setTimeout(() => {
+                shimmerTargets.forEach(element => {
+                    element.classList.remove('loading-shimmer');
+                });
+            }, 1400);
+
+
+            /* --- MECHANICAL HAPTIC FEEDBACK SYSTEM --- */
+            function executeMechanicalHapticTick() {
+                if ('vibrate' in navigator) {
+                    // 12ms micro pulse emulating physics-based tactile mechanical resistance clicks
+                    navigator.vibrate(12);
+                }
+            }
+
+
+            /* --- DESKTOP NAVIGATION SIDEBAR HANDLERS --- */
             const menuToggle = document.getElementById('menuToggle');
             const navLinks = document.getElementById('navLinks');
             const menuTabs = document.querySelectorAll('.nav-tab');
@@ -761,7 +803,8 @@
                 });
             });
 
-            /* --- LIVE ACTIVE STATE MOBILE HUD ENGINE --- */
+
+            /* --- LIVE ACTIVE STATE MOBILE HUD BOTTOM PANEL --- */
             const targetSections = document.querySelectorAll('section');
             const mobileHudButtons = document.querySelectorAll('.mobile-hud-btn');
 
@@ -784,7 +827,8 @@
                 });
             }, { passive: true });
 
-            /* --- IPOD INTERACTIVE COVERFLOW ENGINE --- */
+
+            /* --- IPOD COVERFLOW WORK ENGINE --- */
             const cards = document.querySelectorAll('.project-card');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -822,8 +866,21 @@
                 });
             }
 
-            const shiftPrev = () => { if (currentIdx > 0) { currentIdx--; resetAndRefreshed(); } };
-            const shiftNext = () => { if (currentIdx < cards.length - 1) { currentIdx++; resetAndRefreshed(); } };
+            const shiftPrev = () => { 
+                if (currentIdx > 0) { 
+                    currentIdx--; 
+                    executeMechanicalHapticTick();
+                    resetAndRefreshed(); 
+                } 
+            };
+            
+            const shiftNext = () => { 
+                if (currentIdx < cards.length - 1) { 
+                    currentIdx++; 
+                    executeMechanicalHapticTick();
+                    resetAndRefreshed(); 
+                } 
+            };
 
             prevBtn.addEventListener('click', shiftPrev);
             nextBtn.addEventListener('click', shiftNext);
@@ -833,7 +890,7 @@
                 updateCarousel();
             }
 
-            /* --- TOUCH HANDLING MATRIX --- */
+            /* --- MOBILE SWIPE DETECTORS --- */
             let touchStartX = 0;
             let touchEndX = 0;
 
@@ -860,6 +917,7 @@
                     if (index !== currentIdx) {
                         e.preventDefault();
                         currentIdx = index;
+                        executeMechanicalHapticTick();
                         resetAndRefreshed();
                     }
                 });
@@ -868,7 +926,8 @@
             updateCarousel();
             window.addEventListener('resize', updateCarousel);
 
-            /* --- PARALLAX PERSPECTIVE COORDINATES (DESKTOP ONLY) --- */
+
+            /* --- PARALLAX PERSPECTIVE SHIFTS (DESKTOP INTERACTIVE MOUSE MATRIX) --- */
             const gridBg = document.getElementById('parallaxGrid');
             const allPanels = document.querySelectorAll('.glass-panel');
 
