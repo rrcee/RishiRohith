@@ -525,23 +525,19 @@
 </head>
 <body>
 
-    <!-- BACKDROP SYSTEMS -->
     <div class="blur-overlay"></div>
     <div class="parallax-grid-bg" id="parallaxGrid"></div>
 
-    <!-- LOCAL DIRECTORY AUDIO TRACK -->
     <audio id="bgMusicTrack" loop preload="auto">
         <source src="audio.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- LIVE DYNAMIC HUD TOGGLE CONTROLLER -->
     <div class="audio-hud-control muted-state" id="audioHudTrigger">
         <div class="audio-waves">
             <span></span><span></span><span></span>
         </div>
     </div>
 
-    <!-- TOP DESKTOP NAVIGATION HUB -->
     <header class="system-header">
         <div class="brand-logo">Rishi Rohith</div>
         <div class="hud-actions">
@@ -559,8 +555,7 @@
         </ul>
     </header>
 
-    <!-- PREMIUM INTEGRATED MOBILE HUD BOTTOM PANEL -->
-    <nav class="mobile-hud-navigation">
+    <nav class="mobile-hud-navigation" id="mobileHudBar">
         <a href="#home" class="mobile-hud-btn active-hud-tab">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span>Home</span>
@@ -585,7 +580,6 @@
 
     <div class="scroll-stage">
         
-        <!-- SECTION 1: HOME -->
         <section id="home">
             <div class="hero-center">
                 <h1 class="hero-title">Rishi <span>Rohith</span></h1>
@@ -594,7 +588,6 @@
             </div>
         </section>
 
-        <!-- SECTION 2: WORK -->
         <section id="work">
             <h2 class="section-title">Selected <span>Projects</span></h2>
             <div class="work-layout">
@@ -660,7 +653,6 @@
             </div>
         </section>
 
-        <!-- SECTION 3: VISION -->
         <section id="vision">
             <h2 class="section-title">Artistic <span>Vision</span></h2>
             <div class="about-box glass-panel loading-shimmer">
@@ -670,7 +662,6 @@
             </div>
         </section>
 
-        <!-- SECTION 4: TOOLKIT -->
         <section id="toolkit">
             <h2 class="section-title">Creative <span>Mediums</span></h2>
             <div class="languages-grid">
@@ -689,7 +680,6 @@
             </div>
         </section>
 
-        <!-- SECTION 5: NETWORK -->
         <section id="network">
             <h2 class="section-title">Reach <span>Out</span></h2>
             <div class="socials-grid">
@@ -721,31 +711,43 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            /* --- SCROLLING-TRIGGERED AUDIO ENGINE --- */
+            /* --- SCROLLING & TOUCH INTERACTION AUDIO MATRIX --- */
             const bgMusicTrack = document.getElementById('bgMusicTrack');
             const audioHudTrigger = document.getElementById('audioHudTrigger');
+            const mobileHudBar = document.getElementById('mobileHudBar');
             let isAudioActivated = false;
 
-            function triggerScrollAudioActivation() {
+            function runAudioExecutionLoop() {
                 if (isAudioActivated) return;
                 
                 bgMusicTrack.play().then(() => {
                     isAudioActivated = true;
                     audioHudTrigger.classList.remove('muted-state');
                     audioHudTrigger.classList.add('playing-state');
-                    window.removeEventListener('scroll', triggerScrollAudioActivation);
+                    cleanAudioListeners();
                 }).catch((err) => {
-                    console.log("Autoplay blocked by standard browser constraints. Awaiting direct tap context.");
+                    console.log("Autoplay pipeline throttled by security token. Awaiting continuous gesture map.");
                 });
             }
 
-            // Bind audio deployment exclusively to scroll vector mutations
-            window.addEventListener('scroll', triggerScrollAudioActivation, { passive: true });
+            function cleanAudioListeners() {
+                window.removeEventListener('scroll', runAudioExecutionLoop);
+                window.removeEventListener('touchstart', runAudioExecutionLoop);
+                document.body.removeEventListener('click', runAudioExecutionLoop);
+            }
 
-            // Direct HUD toggle management
+            // Dual binding hooks ensuring mobile sandboxes catch validation tokens early
+            window.addEventListener('scroll', runAudioExecutionLoop, { passive: true });
+            window.addEventListener('touchstart', runAudioExecutionLoop, { passive: true });
+            document.body.addEventListener('click', runAudioExecutionLoop, { passive: true });
+
+            // Universal Audio Panel Toggle Hook
             audioHudTrigger.addEventListener('click', (e) => {
                 e.stopPropagation();
-                isAudioActivated = true; // Protect scroll hook from re-firing
+                e.preventDefault();
+                isAudioActivated = true; 
+                cleanAudioListeners();
+
                 if (bgMusicTrack.paused) {
                     bgMusicTrack.play();
                     audioHudTrigger.classList.remove('muted-state');
@@ -760,8 +762,6 @@
 
             /* --- LAZY-LOADED SHIMMER RESOLUTION ENGINE --- */
             const shimmerTargets = document.querySelectorAll('.loading-shimmer');
-            
-            // Simulates dynamic layout ready state transitions after images/components assemble
             setTimeout(() => {
                 shimmerTargets.forEach(element => {
                     element.classList.remove('loading-shimmer');
@@ -772,7 +772,6 @@
             /* --- MECHANICAL HAPTIC FEEDBACK SYSTEM --- */
             function executeMechanicalHapticTick() {
                 if ('vibrate' in navigator) {
-                    // 12ms micro pulse emulating physics-based tactile mechanical resistance clicks
                     navigator.vibrate(12);
                 }
             }
@@ -804,9 +803,26 @@
             });
 
 
-            /* --- LIVE ACTIVE STATE MOBILE HUD BOTTOM PANEL --- */
+            /* --- REPAIRED INTERACTIVE MOBILE HUD NAV STRIPS --- */
             const targetSections = document.querySelectorAll('section');
             const mobileHudButtons = document.querySelectorAll('.mobile-hud-btn');
+
+            mobileHudButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    executeMechanicalHapticTick();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSectionElement = document.querySelector(targetId);
+                    
+                    if (targetSectionElement) {
+                        window.scrollTo({
+                            top: targetSectionElement.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
 
             window.addEventListener('scroll', () => {
                 let activeSectionId = 'home';
@@ -927,7 +943,7 @@
             window.addEventListener('resize', updateCarousel);
 
 
-            /* --- PARALLAX PERSPECTIVE SHIFTS (DESKTOP INTERACTIVE MOUSE MATRIX) --- */
+            /* --- DESKTOP MOUSE PARALLAX INTERACTIVE SYSTEMS --- */
             const gridBg = document.getElementById('parallaxGrid');
             const allPanels = document.querySelectorAll('.glass-panel');
 
