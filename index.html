@@ -20,7 +20,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* Completely eliminates the blue tap highlight on mobile browsers */
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -50,6 +49,65 @@
             pointer-events: none;
         }
 
+        /* AUDIO HUD INDICATOR */
+        .audio-hud-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 2000;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(216, 180, 254, 0.6);
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
+            transition: all 0.3s ease;
+        }
+        .audio-hud-control:hover {
+            transform: scale(1.05);
+            background: var(--pure-white);
+        }
+        .audio-waves {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            width: 18px;
+            height: 16px;
+        }
+        .audio-waves span {
+            display: block;
+            width: 2px;
+            background: var(--deep-violet);
+            border-radius: 2px;
+            height: 100%;
+            transform-origin: bottom;
+            animation: bounceWave 1.2s ease infinite alternate;
+            animation-play-state: paused;
+        }
+        .audio-waves span:nth-child(2) { animation-delay: 0.3s; height: 60%; }
+        .audio-waves span:nth-child(3) { animation-delay: 0.6s; height: 80%; }
+        
+        .playing-state .audio-waves span {
+            animation-play-state: running;
+        }
+        .muted-state .audio-waves span {
+            animation: none !important;
+            height: 2px !important;
+            background: var(--text-primary);
+            opacity: 0.4;
+        }
+
+        @keyframes bounceWave {
+            0% { transform: scaleY(0.2); }
+            100% { transform: scaleY(1); }
+        }
+
         /* DYNAMIC BACKGROUND GRID */
         .parallax-grid-bg {
             position: fixed;
@@ -65,7 +123,7 @@
             transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* --- SOLID GLASS PANELS --- */
+        /* --- GLASS PANELS --- */
         .glass-panel {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(20px);
@@ -127,6 +185,7 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* DESKTOP SIDE BAR PANEL NAVIGATION */
         .nav-links {
             position: fixed;
             top: 0; right: -100%;
@@ -169,6 +228,11 @@
         .menu-open-state span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
         .menu-open-state span:nth-child(2) { opacity: 0; }
         .menu-open-state span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* PREMIUM BOTTOM SHEET MOBILE HUD SYSTEM */
+        .mobile-hud-navigation {
+            display: none;
+        }
 
         /* --- LAYOUT MATRIX --- */
         .scroll-stage {
@@ -266,7 +330,7 @@
         .carousel-arrow:hover { background: var(--pure-white); transform: scale(1.05); border-color: var(--deep-violet); }
         .carousel-arrow svg { width: 14px; height: 14px; fill: var(--text-primary); }
 
-        /* --- AUTHENTIC ARTISTIC VISION SECTION --- */
+        /* --- ARTISTIC VISION SECTION --- */
         .about-box { max-width: 780px; padding: 50px; text-align: center; }
         .about-para { font-size: 1.25rem; line-height: 1.8; color: var(--text-primary); }
         .about-para span.highlight { font-weight: 700; color: var(--deep-violet); }
@@ -296,22 +360,25 @@
             width: 100%; height: 80px; display: flex; align-items: center; justify-content: center;
             font-size: 0.75rem; color: var(--text-sub); letter-spacing: 0.12em;
             border-top: 1px solid rgba(216, 180, 254, 0.2); font-weight: 600; text-align: center; padding: 0 20px;
+            margin-bottom: 0px;
         }
 
-        /* --- MOBILE PERSPECTIVE MATRIX WITH ANIMATED GRADIENT --- */
+        /* --- MOBILE SCREEN MEDIA OVERRIDES --- */
         @media (max-width: 768px) {
             body {
-                /* Continuous luxury fluid gradient sweep across the mobile system backdrop */
                 background: linear-gradient(-45deg, #F5F3FF, #EDE9FE, #E0D7FF, #F3E8FF);
                 background-size: 400% 400%;
                 animation: mobileFluidGradient 12s ease infinite;
             }
+            
+            /* Hidden elements on mobile viewboards */
+            .parallax-grid-bg, .hud-actions, .nav-links { display: none !important; }
+            
             section {
                 min-height: auto;
-                padding: 90px 16px 40px 16px;
+                padding: 70px 16px 40px 16px;
             }
-            .system-header { padding: 0 20px; height: 70px; }
-            .parallax-grid-bg { display: none !important; }
+            .system-header { padding: 0 20px; height: 65px; justify-content: center; }
             
             .carousel-viewport { 
                 height: 420px; 
@@ -325,19 +392,20 @@
                 padding: 24px;
             }
             
-            /* Enhanced, more accessible scale optimization for iPod UI arrows on touch displays */
+            /* Bigger iPod control configuration */
             .carousel-nav {
                 display: flex;
                 margin-top: -5px;
-                gap: 24px;
+                gap: 28px;
             }
             .carousel-arrow { 
-                width: 48px; 
-                height: 48px; 
+                width: 54px; 
+                height: 54px; 
+                background: rgba(255, 255, 255, 0.7);
             }
             .carousel-arrow svg {
-                width: 18px;
-                height: 18px;
+                width: 22px;
+                height: 22px;
             }
             
             .languages-grid { flex-direction: column; width: 100%; gap: 14px; }
@@ -347,8 +415,79 @@
             .social-card { padding: 22px; }
             
             .about-box { padding: 30px 20px; text-align: center; }
-            .nav-links { width: 100%; }
             .hero-title { margin-bottom: 12px; }
+
+            .audio-hud-control {
+                bottom: 100px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
+            }
+
+            .system-footer {
+                padding-bottom: 110px;
+            }
+
+            /* --- STUNNING BOTTOM SHELF NAVIGATION DESIGN --- */
+            .mobile-hud-navigation {
+                display: flex;
+                position: fixed;
+                bottom: 24px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100% - 32px);
+                max-width: 460px;
+                height: 64px;
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(25px);
+                -webkit-backdrop-filter: blur(25px);
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                box-shadow: 0 12px 35px rgba(139, 92, 246, 0.18);
+                border-radius: 32px;
+                z-index: 9999;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 10px;
+            }
+            
+            .mobile-hud-btn {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                text-decoration: none;
+                color: var(--text-primary);
+                opacity: 0.5;
+                font-size: 0.62rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                gap: 5px;
+                transition: all 0.25s ease;
+            }
+
+            .mobile-hud-btn svg {
+                width: 18px;
+                height: 18px;
+                fill: none;
+                stroke: var(--text-primary);
+                stroke-width: 2.2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                transition: all 0.25s ease;
+            }
+
+            .mobile-hud-btn.active-hud-tab {
+                opacity: 1;
+                color: var(--deep-violet);
+            }
+
+            .mobile-hud-btn.active-hud-tab svg {
+                stroke: var(--deep-violet);
+                transform: translateY(-2px);
+            }
         }
 
         @keyframes mobileFluidGradient {
@@ -360,9 +499,23 @@
 </head>
 <body>
 
+    <!-- BACKDROP SYSTEMS -->
     <div class="blur-overlay"></div>
     <div class="parallax-grid-bg" id="parallaxGrid"></div>
 
+    <!-- AUDIO PLAYER ELEMENT (Muted by default to override explicit strict browser autoplay design restrictions) -->
+    <audio id="bgMusicTrack" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- LIVE DYNAMIC HUD TOGGLE CONTROLLER -->
+    <div class="audio-hud-control muted-state" id="audioHudTrigger">
+        <div class="audio-waves">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- TOP DESKTOP NAVIGATION HUB -->
     <header class="system-header">
         <div class="brand-logo">Rishi Rohith</div>
         <div class="hud-actions">
@@ -380,8 +533,33 @@
         </ul>
     </header>
 
+    <!-- PREMIUM INTEGRATED MOBILE HUD BOTTOM PANEL -->
+    <nav class="mobile-hud-navigation">
+        <a href="#home" class="mobile-hud-btn active-hud-tab">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Home</span>
+        </a>
+        <a href="#work" class="mobile-hud-btn">
+            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            <span>Projects</span>
+        </a>
+        <a href="#vision" class="mobile-hud-btn">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span>Vision</span>
+        </a>
+        <a href="#toolkit" class="mobile-hud-btn">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+            <span>Toolkit</span>
+        </a>
+        <a href="#network" class="mobile-hud-btn">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>Contact</span>
+        </a>
+    </nav>
+
     <div class="scroll-stage">
         
+        <!-- SECTION 1: HOME -->
         <section id="home">
             <div class="hero-center">
                 <h1 class="hero-title">Rishi <span>Rohith</span></h1>
@@ -390,6 +568,7 @@
             </div>
         </section>
 
+        <!-- SECTION 2: WORK -->
         <section id="work">
             <h2 class="section-title">Selected <span>Projects</span></h2>
             <div class="work-layout">
@@ -455,6 +634,7 @@
             </div>
         </section>
 
+        <!-- SECTION 3: VISION -->
         <section id="vision">
             <h2 class="section-title">Artistic <span>Vision</span></h2>
             <div class="about-box glass-panel">
@@ -464,6 +644,7 @@
             </div>
         </section>
 
+        <!-- SECTION 4: TOOLKIT -->
         <section id="toolkit">
             <h2 class="section-title">Creative <span>Mediums</span></h2>
             <div class="languages-grid">
@@ -482,6 +663,7 @@
             </div>
         </section>
 
+        <!-- SECTION 5: NETWORK -->
         <section id="network">
             <h2 class="section-title">Reach <span>Out</span></h2>
             <div class="socials-grid">
@@ -513,7 +695,48 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            /* --- MENU INTERACTIVE SCRIPTS --- */
+            /* --- SECURE AUTOPLAY MUSIC ENGINE --- */
+            const bgMusicTrack = document.getElementById('bgMusicTrack');
+            const audioHudTrigger = document.getElementById('audioHudTrigger');
+
+            // Force browser audio activation via implicit triggers
+            function initiateAudioAutoplay() {
+                bgMusicTrack.play().then(() => {
+                    audioHudTrigger.classList.remove('muted-state');
+                    audioHudTrigger.classList.add('playing-state');
+                    removeAllAutoplayListeners();
+                }).catch((err) => {
+                    console.log("Autoplay blocked by browser security policy. Awaiting user interaction loop.");
+                });
+            }
+
+            function removeAllAutoplayListeners() {
+                window.removeEventListener('click', initiateAudioAutoplay);
+                window.removeEventListener('touchstart', initiateAudioAutoplay);
+                window.removeEventListener('scroll', initiateAudioAutoplay);
+            }
+
+            // High-priority automatic trigger array execution
+            initiateAudioAutoplay();
+            window.addEventListener('click', initiateAudioAutoplay, { passive: true });
+            window.addEventListener('touchstart', initiateAudioAutoplay, { passive: true });
+            window.addEventListener('scroll', initiateAudioAutoplay, { passive: true });
+
+            // Direct HUD button interactivity management
+            audioHudTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (bgMusicTrack.paused) {
+                    bgMusicTrack.play();
+                    audioHudTrigger.classList.remove('muted-state');
+                    audioHudTrigger.classList.add('playing-state');
+                } else {
+                    bgMusicTrack.pause();
+                    audioHudTrigger.classList.remove('playing-state');
+                    audioHudTrigger.classList.add('muted-state');
+                }
+            });
+
+            /* --- DESKTOP INTERACTIVE SCRIPTS --- */
             const menuToggle = document.getElementById('menuToggle');
             const navLinks = document.getElementById('navLinks');
             const menuTabs = document.querySelectorAll('.nav-tab');
@@ -537,6 +760,29 @@
                     navLinks.classList.remove('menu-open');
                 });
             });
+
+            /* --- LIVE ACTIVE STATE MOBILE HUD ENGINE --- */
+            const targetSections = document.querySelectorAll('section');
+            const mobileHudButtons = document.querySelectorAll('.mobile-hud-btn');
+
+            window.addEventListener('scroll', () => {
+                let activeSectionId = 'home';
+                const baseScrollOffset = window.scrollY + (window.innerHeight / 3);
+
+                targetSections.forEach(section => {
+                    if (baseScrollOffset >= section.offsetTop) {
+                        activeSectionId = section.getAttribute('id');
+                    }
+                });
+
+                mobileHudButtons.forEach(btn => {
+                    if (btn.getAttribute('href') === `#${activeSectionId}`) {
+                        btn.classList.add('active-hud-tab');
+                    } else {
+                        btn.classList.remove('active-hud-tab');
+                    }
+                });
+            }, { passive: true });
 
             /* --- IPOD INTERACTIVE COVERFLOW ENGINE --- */
             const cards = document.querySelectorAll('.project-card');
