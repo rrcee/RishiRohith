@@ -1,60 +1,1028 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rishi Rohith | Portfolio</title>
-    <style>
-        /* --- START OVERLAY (Fixes Autoplay Block) --- */
-        #startOverlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #F5F3FF;
-            z-index: 99999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: opacity 0.8s ease;
-        }
-        .start-btn {
-            padding: 20px 40px;
-            background: #8B5CF6;
-            color: white;
-            border-radius: 50px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
-        }
-        
-        /* ... Keep all your previous CSS below ... */
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rishi Rohith | Portfolio</title>
+
+<style>
+:root{
+    --bg-base:#F5F3FF;
+    --pure-white:#FFFFFF;
+    --text-primary:#1E1B4B;
+    --text-sub:#4F46E5;
+    --blush-purple:#D8B4FE;
+    --deep-violet:#8B5CF6;
+    --font-sans:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+    background-color:var(--bg-base);
+}
+
+body{
+    width:100%;
+    overflow-x:hidden;
+    color:var(--text-primary);
+    font-family:var(--font-sans);
+    background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 40%,#D8B4FE 80%,#F5F3FF 100%);
+    background-attachment:fixed;
+    background-size:cover;
+    perspective:1200px;
+}
+
+.blur-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    background:rgba(245,243,255,.15);
+    pointer-events:none;
+}
+
+.audio-hud-control{
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    z-index:2000;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    background:rgba(255,255,255,.6);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(216,180,254,.6);
+    box-shadow:0 8px 24px rgba(139,92,246,.15);
+    transition:all .3s ease;
+}
+
+.audio-hud-control:hover{
+    transform:scale(1.05);
+    background:var(--pure-white);
+}
+
+.audio-waves{
+    display:flex;
+    align-items:flex-end;
+    gap:3px;
+    width:18px;
+    height:16px;
+}
+
+.audio-waves span{
+    display:block;
+    width:2px;
+    background:var(--deep-violet);
+    border-radius:2px;
+    height:100%;
+    transform-origin:bottom;
+    animation:bounceWave 1.2s ease infinite alternate;
+    animation-play-state:paused;
+}
+
+.audio-waves span:nth-child(2){
+    animation-delay:.3s;
+    height:60%;
+}
+
+.audio-waves span:nth-child(3){
+    animation-delay:.6s;
+    height:80%;
+}
+
+.playing-state .audio-waves span{
+    animation-play-state:running;
+}
+
+.muted-state .audio-waves span{
+    animation:none!important;
+    height:2px!important;
+    background:var(--text-primary);
+    opacity:.4;
+}
+
+@keyframes bounceWave{
+    0%{transform:scaleY(.2);}
+    100%{transform:scaleY(1);}
+}
+
+.parallax-grid-bg{
+    position:fixed;
+    width:120vw;
+    height:120vh;
+    top:-10vh;
+    left:-10vw;
+    background-image:
+    linear-gradient(to right,rgba(139,92,246,.06) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(139,92,246,.06) 1px,transparent 1px);
+    background-size:60px 60px;
+    z-index:2;
+    pointer-events:none;
+    transform:translateZ(-100px);
+    transition:transform .2s cubic-bezier(.25,1,.5,1);
+}
+
+.glass-panel{
+    background:rgba(255,255,255,.45);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid rgba(216,180,254,.5);
+    box-shadow:0 20px 45px rgba(216,180,254,.1);
+    border-radius:24px;
+    position:relative;
+    transform-style:preserve-3d;
+    backface-visibility:hidden;
+    transition:transform .6s cubic-bezier(.16,1,.3,1),opacity .6s,background-color .3s;
+}
+
+.loading-shimmer::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:23px;
+    background:linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,.4) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    background-size:200% 100%;
+    animation:cardShimmerSweep 1.6s infinite linear;
+    z-index:5;
+    pointer-events:none;
+}
+
+.loading-shimmer *{
+    opacity:.15;
+    pointer-events:none;
+}
+
+@keyframes cardShimmerSweep{
+    0%{background-position:200% 0;}
+    100%{background-position:-200% 0;}
+}
+
+.system-header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:80px;
+    padding:0 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:1000;
+    background:rgba(245,243,255,.4);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(216,180,254,.25);
+}
+
+.brand-logo{
+    font-size:.9rem;
+    font-weight:800;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--text-primary);
+    position:relative;
+}
+
+.brand-logo::after{
+    content:'';
+    position:absolute;
+    bottom:-4px;
+    left:0;
+    width:12px;
+    height:2px;
+    background:var(--deep-violet);
+}
+
+.menu-toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:6px;
+    cursor:pointer;
+    width:28px;
+    height:28px;
+    z-index:1200;
+}
+
+.menu-toggle span{
+    width:100%;
+    height:2px;
+    background:var(--text-primary);
+    transition:all .4s cubic-bezier(.16,1,.3,1);
+}
+
+.nav-links{
+    position:fixed;
+    top:0;
+    right:-100%;
+    width:320px;
+    height:100vh;
+    background:rgba(245,243,255,.9);
+    backdrop-filter:blur(35px);
+    -webkit-backdrop-filter:blur(35px);
+    border-left:1px solid rgba(216,180,254,.5);
+    display:flex;
+    flex-direction:column;
+    padding:140px 40px;
+    gap:16px;
+    list-style:none;
+    transition:right .5s cubic-bezier(.16,1,.3,1);
+    z-index:1050;
+}
+
+.nav-links.menu-open{
+    right:0;
+}
+
+.nav-tab{
+    display:block;
+    padding:14px 28px;
+    font-size:.8rem;
+    text-transform:uppercase;
+    letter-spacing:.15em;
+    color:var(--text-sub);
+    text-decoration:none;
+    cursor:pointer;
+    transition:all .3s ease;
+    border-radius:30px;
+    font-weight:700;
+    text-align:center;
+}
+
+.nav-tab:hover{
+    color:var(--text-primary);
+    background:rgba(255,255,255,.6);
+}
+
+.menu-open-state span:nth-child(1){
+    transform:translateY(8px) rotate(45deg);
+}
+
+.menu-open-state span:nth-child(2){
+    opacity:0;
+}
+
+.menu-open-state span:nth-child(3){
+    transform:translateY(-8px) rotate(-45deg);
+}
+
+.mobile-hud-navigation{
+    display:none;
+}
+
+.scroll-stage{
+    position:relative;
+    z-index:10;
+    width:100%;
+    max-width:1200px;
+    margin:0 auto;
+}
+
+section{
+    width:100%;
+    min-height:100vh;
+    padding:140px 24px 80px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.section-title{
+    font-size:2.2rem;
+    font-weight:800;
+    letter-spacing:-.02em;
+    margin-bottom:50px;
+    text-align:center;
+    text-transform:uppercase;
+    color:var(--text-primary);
+}
+
+.section-title span{
+    color:var(--deep-violet);
+}
+
+.hero-center{
+    text-align:center;
+    max-width:750px;
+}
+
+.hero-title{
+    font-size:clamp(2.8rem,7vw,5.5rem);
+    font-weight:900;
+    letter-spacing:-.03em;
+    line-height:1.1;
+    margin-bottom:20px;
+    color:var(--text-primary);
+}
+
+.hero-title span{
+    color:var(--deep-violet);
+}
+
+.hero-tagline{
+    font-size:clamp(1rem,2vw,1.3rem);
+    font-weight:600;
+    letter-spacing:.05em;
+    color:var(--text-sub);
+    margin-bottom:20px;
+}
+
+.hero-subtext{
+    font-size:1rem;
+    color:var(--text-sub);
+    max-width:560px;
+    margin:0 auto;
+    line-height:1.7;
+}
+
+.work-layout{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:40px;
+    width:100%;
+}
+
+.carousel-viewport{
+    width:100%;
+    height:480px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    perspective:1000px;
+}
+
+.carousel-container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    width:100%;
+    height:100%;
+    transform-style:preserve-3d;
+}
+
+.project-card{
+    position:absolute;
+    width:300px;
+    height:410px;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    cursor:pointer;
+    user-select:none;
+}
+
+.project-meta{
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--deep-violet);
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.project-name{
+    font-size:1.6rem;
+    font-weight:800;
+    color:var(--text-primary);
+    margin-bottom:10px;
+}
+
+.project-desc{
+    font-size:.85rem;
+    color:var(--text-primary);
+    opacity:.8;
+    line-height:1.5;
+}
+
+.project-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px;
+    border-radius:12px;
+    background:var(--pure-white);
+    border:1px solid rgba(216,180,254,.5);
+    color:var(--text-primary);
+    font-size:.85rem;
+    font-weight:700;
+    text-decoration:none;
+    transition:all .3s ease;
+    width:100%;
+    transform:translateZ(20px);
+}
+
+.project-btn:hover{
+    background:var(--deep-violet);
+    color:var(--pure-white);
+    border-color:transparent;
+}
+
+.carousel-nav{
+    display:flex;
+    gap:15px;
+}
+
+.carousel-arrow{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:all .3s ease;
+}
+
+.carousel-arrow:hover{
+    background:var(--pure-white);
+    transform:scale(1.05);
+}
+
+.carousel-arrow svg{
+    width:14px;
+    height:14px;
+    fill:var(--text-primary);
+}
+
+.about-box{
+    max-width:780px;
+    padding:50px;
+    text-align:center;
+}
+
+.about-para{
+    font-size:1.25rem;
+    line-height:1.8;
+    color:var(--text-primary);
+}
+
+.highlight{
+    font-weight:700;
+    color:var(--deep-violet);
+}
+
+.languages-grid{
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    width:100%;
+    max-width:900px;
+    flex-wrap:wrap;
+}
+
+.lang-pill{
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    min-width:260px;
+    flex:1;
+}
+
+.lang-title{
+    font-size:1.2rem;
+    font-weight:800;
+    color:var(--text-primary);
+    text-align:center;
+}
+
+.lang-proficiency{
+    font-size:.75rem;
+    letter-spacing:.1em;
+    color:var(--deep-violet);
+    text-transform:uppercase;
+    font-weight:700;
+}
+
+.socials-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+    width:100%;
+    max-width:700px;
+}
+
+.social-card{
+    padding:35px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    text-decoration:none;
+}
+
+.social-platform{
+    font-size:.75rem;
+    letter-spacing:.15em;
+    color:var(--text-sub);
+    text-transform:uppercase;
+    font-weight:700;
+}
+
+.social-handle{
+    font-size:1.1rem;
+    font-weight:700;
+    color:var(--text-primary);
+}
+
+.system-footer{
+    width:100%;
+    height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.75rem;
+    color:var(--text-sub);
+    letter-spacing:.12em;
+    border-top:1px solid rgba(216,180,254,.2);
+    font-weight:600;
+    text-align:center;
+    padding:0 20px;
+}
+
+@media (max-width:768px){
+
+    body{
+        background:linear-gradient(-45deg,#F5F3FF,#EDE9FE,#E0D7FF,#F3E8FF);
+        background-size:400% 400%;
+        animation:mobileFluidGradient 12s ease infinite;
+    }
+
+    .parallax-grid-bg,
+    .nav-links{
+        display:none!important;
+    }
+
+    section{
+        min-height:auto;
+        padding:70px 16px 40px;
+    }
+
+    .system-header{
+        padding:0 20px;
+        height:65px;
+        justify-content:center;
+    }
+
+    .carousel-viewport{
+        height:420px;
+        width:100%;
+        overflow:hidden;
+        touch-action:pan-y;
+    }
+
+    .project-card{
+        width:240px;
+        height:350px;
+        padding:24px;
+    }
+
+    .carousel-nav{
+        margin-top:-5px;
+        gap:28px;
+    }
+
+    .carousel-arrow{
+        width:54px;
+        height:54px;
+        background:rgba(255,255,255,.7);
+    }
+
+    .carousel-arrow svg{
+        width:22px;
+        height:22px;
+    }
+
+    .languages-grid{
+        flex-direction:column;
+        width:100%;
+        gap:14px;
+    }
+
+    .lang-pill{
+        min-width:100%;
+        padding:20px;
+    }
+
+    .socials-grid{
+        grid-template-columns:1fr;
+        gap:14px;
+    }
+
+    .social-card{
+        padding:22px;
+    }
+
+    .about-box{
+        padding:30px 20px;
+    }
+
+    .audio-hud-control{
+        bottom:100px;
+        right:20px;
+        width:44px;
+        height:44px;
+    }
+
+    .system-footer{
+        padding-bottom:110px;
+    }
+
+    .mobile-hud-navigation{
+        display:flex;
+        position:fixed;
+        bottom:24px;
+        left:50%;
+        transform:translateX(-50%);
+        width:calc(100% - 32px);
+        max-width:460px;
+        height:64px;
+        background:rgba(255,255,255,.7);
+        backdrop-filter:blur(25px);
+        -webkit-backdrop-filter:blur(25px);
+        border:1px solid rgba(255,255,255,.5);
+        box-shadow:0 12px 35px rgba(139,92,246,.18);
+        border-radius:32px;
+        z-index:9999;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 10px;
+    }
+
+    .mobile-hud-btn{
+        flex:1;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        height:100%;
+        text-decoration:none;
+        color:var(--text-primary);
+        opacity:.5;
+        font-size:.62rem;
+        font-weight:700;
+        text-transform:uppercase;
+        letter-spacing:.05em;
+        gap:5px;
+        transition:all .25s ease;
+    }
+
+    .mobile-hud-btn svg{
+        width:18px;
+        height:18px;
+        fill:none;
+        stroke:var(--text-primary);
+        stroke-width:2.2;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        transition:all .25s ease;
+    }
+
+    .mobile-hud-btn.active-hud-tab{
+        opacity:1;
+        color:var(--deep-violet);
+    }
+
+    .mobile-hud-btn.active-hud-tab svg{
+        stroke:var(--deep-violet);
+        transform:translateY(-2px);
+    }
+}
+
+@keyframes mobileFluidGradient{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+</style>
 </head>
+
 <body>
 
-    <div id="startOverlay">
-        <div class="start-btn">Enter Portfolio</div>
+<div class="blur-overlay"></div>
+<div class="parallax-grid-bg" id="parallaxGrid"></div>
+
+<!-- IMPORTANT -->
+<!-- Put audio.mp3 in SAME folder as index.html -->
+
+<audio id="bgMusicTrack" loop playsinline webkit-playsinline preload="auto">
+    <source src="./audio.mp3" type="audio/mpeg">
+</audio>
+
+<div class="audio-hud-control muted-state" id="audioHudTrigger">
+    <div class="audio-waves">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+<header class="system-header">
+    <div class="brand-logo">Rishi Rohith</div>
+
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-    <audio id="bgMusicTrack" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-tab">Home</a></li>
+        <li><a href="#work" class="nav-tab">Work</a></li>
+        <li><a href="#vision" class="nav-tab">Vision</a></li>
+        <li><a href="#toolkit" class="nav-tab">Toolkit</a></li>
+        <li><a href="#network" class="nav-tab">Reach Out</a></li>
+    </ul>
+</header>
 
-    <script>
-        const overlay = document.getElementById('startOverlay');
-        const audio = document.getElementById('bgMusicTrack');
+<nav class="mobile-hud-navigation">
+    <a href="#home" class="mobile-hud-btn active-hud-tab"><span>Home</span></a>
+    <a href="#work" class="mobile-hud-btn"><span>Projects</span></a>
+    <a href="#vision" class="mobile-hud-btn"><span>Vision</span></a>
+    <a href="#toolkit" class="mobile-hud-btn"><span>Toolkit</span></a>
+    <a href="#network" class="mobile-hud-btn"><span>Contact</span></a>
+</nav>
 
-        overlay.addEventListener('click', () => {
-            // Fade out overlay
-            overlay.style.opacity = '0';
-            setTimeout(() => overlay.style.display = 'none', 800);
-            
-            // Force play audio immediately after user gesture
-            audio.play().catch(e => console.error("Audio failed:", e));
+<div class="scroll-stage">
+
+<section id="home">
+    <div class="hero-center">
+        <h1 class="hero-title">Rishi <span>Rohith</span></h1>
+        <p class="hero-tagline">Visual Artist • Director • Storyteller</p>
+        <p class="hero-subtext">
+            Capturing spatial atmospheres, interaction physics,
+            and cinematic concepts across modern digital mediums.
+        </p>
+    </div>
+</section>
+
+<section id="work">
+
+<h2 class="section-title">Selected <span>Projects</span></h2>
+
+<div class="work-layout">
+
+<div class="carousel-viewport" id="carouselViewport">
+
+<div class="carousel-container">
+
+<div class="project-card glass-panel loading-shimmer" data-index="0">
+<div>
+<div class="project-meta">Virtual Capture</div>
+<h3 class="project-name">FH5</h3>
+<p class="project-desc">
+Forza Horizon 5 photography collection.
+</p>
+</div>
+<a href="https://rrcee.github.io/fh5/" target="_blank" class="project-btn">
+Visit Site
+</a>
+</div>
+
+<div class="project-card glass-panel loading-shimmer" data-index="1">
+<div>
+<div class="project-meta">Cinematic Rendering</div>
+<h3 class="project-name">Miles Morales</h3>
+<p class="project-desc">
+Spider-Man cinematic rendering gallery.
+</p>
+</div>
+<a href="https://rrcee.github.io/milesmorales/" target="_blank" class="project-btn">
+Visit Site
+</a>
+</div>
+
+<div class="project-card glass-panel loading-shimmer" data-index="2">
+<div>
+<div class="project-meta">Web Ecosystem</div>
+<h3 class="project-name">Bronze Wagon</h3>
+<p class="project-desc">
+Minecraft SMP dashboard ecosystem.
+</p>
+</div>
+<a href="https://rrcee.github.io/bronze-wagon/" target="_blank" class="project-btn">
+Explore
+</a>
+</div>
+
+</div>
+</div>
+
+<div class="carousel-nav">
+<div class="carousel-arrow glass-panel" id="prevBtn">
+<svg viewBox="0 0 24 24">
+<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+</svg>
+</div>
+
+<div class="carousel-arrow glass-panel" id="nextBtn">
+<svg viewBox="0 0 24 24">
+<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+</svg>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="vision">
+<h2 class="section-title">Artistic <span>Vision</span></h2>
+
+<div class="about-box glass-panel loading-shimmer">
+<p class="about-para">
+I am an <span class="highlight">artist</span> focused on
+visual atmosphere, cinematic timing, and immersive storytelling.
+</p>
+</div>
+</section>
+
+<section id="toolkit">
+<h2 class="section-title">Creative <span>Mediums</span></h2>
+
+<div class="languages-grid">
+
+<div class="lang-pill glass-panel loading-shimmer">
+<span class="lang-title">Photography</span>
+<span class="lang-proficiency">Visual Framing</span>
+</div>
+
+<div class="lang-pill glass-panel loading-shimmer">
+<span class="lang-title">Videography</span>
+<span class="lang-proficiency">Cinematography</span>
+</div>
+
+<div class="lang-pill glass-panel loading-shimmer">
+<span class="lang-title">Post Production</span>
+<span class="lang-proficiency">Editing & Grading</span>
+</div>
+
+</div>
+</section>
+
+<section id="network">
+
+<h2 class="section-title">Reach <span>Out</span></h2>
+
+<div class="socials-grid">
+
+<a href="https://instagram.com/sherikum.rishi" target="_blank" class="social-card glass-panel loading-shimmer">
+<span class="social-platform">Instagram</span>
+<span class="social-handle">sherikum.rishi</span>
+</a>
+
+<a href="https://github.com/rrcee" target="_blank" class="social-card glass-panel loading-shimmer">
+<span class="social-platform">GitHub</span>
+<span class="social-handle">rrcee</span>
+</a>
+
+</div>
+</section>
+
+</div>
+
+<footer class="system-footer">
+© 2026 RISHI ROHITH • ALL RIGHTS RESERVED
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+const audio = document.getElementById("bgMusicTrack");
+const audioBtn = document.getElementById("audioHudTrigger");
+
+audio.volume = 0.7;
+
+function playAudio() {
+
+    const playPromise = audio.play();
+
+    if(playPromise !== undefined){
+        playPromise.then(() => {
+            audioBtn.classList.remove("muted-state");
+            audioBtn.classList.add("playing-state");
+        }).catch(err => {
+            console.log("Audio blocked:", err);
         });
+    }
+}
 
-        // ... Your existing script logic ...
-    </script>
+/* FIXED MOBILE + PC AUDIO */
+
+document.body.addEventListener("click", playAudio, { once:true });
+document.body.addEventListener("touchstart", playAudio, { once:true });
+document.body.addEventListener("scroll", playAudio, { once:true });
+
+audioBtn.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+    if(audio.paused){
+        audio.play();
+        audioBtn.classList.remove("muted-state");
+        audioBtn.classList.add("playing-state");
+    }else{
+        audio.pause();
+        audioBtn.classList.remove("playing-state");
+        audioBtn.classList.add("muted-state");
+    }
+});
+
+/* MENU */
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+    menuToggle.classList.toggle("menu-open-state");
+    navLinks.classList.toggle("menu-open");
+});
+
+/* SHIMMER */
+
+setTimeout(() => {
+    document.querySelectorAll(".loading-shimmer").forEach(el => {
+        el.classList.remove("loading-shimmer");
+    });
+}, 1200);
+
+/* CAROUSEL */
+
+const cards = document.querySelectorAll(".project-card");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+let current = 0;
+
+function updateCarousel(){
+
+    cards.forEach((card,i)=>{
+
+        const offset = i-current;
+
+        if(offset === 0){
+            card.style.transform =
+            "translateX(0px) translateZ(100px) scale(1.05)";
+            card.style.opacity = "1";
+            card.style.zIndex = "5";
+        }
+        else if(offset > 0){
+            card.style.transform =
+            `translateX(${offset*180}px) rotateY(-35deg) scale(.82)`;
+            card.style.opacity = ".4";
+            card.style.zIndex = "1";
+        }
+        else{
+            card.style.transform =
+            `translateX(${offset*180}px) rotateY(35deg) scale(.82)`;
+            card.style.opacity = ".4";
+            card.style.zIndex = "1";
+        }
+    });
+}
+
+nextBtn.addEventListener("click", ()=>{
+    if(current < cards.length-1){
+        current++;
+        updateCarousel();
+    }
+});
+
+prevBtn.addEventListener("click", ()=>{
+    if(current > 0){
+        current--;
+        updateCarousel();
+    }
+});
+
+updateCarousel();
+
+});
+</script>
+
 </body>
 </html>
