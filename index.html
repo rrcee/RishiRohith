@@ -519,7 +519,6 @@
             top: 0;
             left: 0;
             z-index: 1;
-            pointer-events: none;
         }
 
         .live-preview-container iframe {
@@ -821,11 +820,11 @@
         }
 
         /* ==========================================================================
-           RESPONSIVE LAYOUT MATRIX & MOBILE CAROUSEL ENGINE
+           STRICT MOBILE ENGINE MEDIA QUERY OVERRIDES
            ========================================================================== */
         @media (max-width: 1200px) {
             :root {
-                --text-display: 76px;
+                --text-display: 72px;
                 --text-heading-lg: 52px;
             }
             .projects-grid {
@@ -837,104 +836,185 @@
         }
 
         @media (max-width: 768px) {
+            /* Structural Typography Compressors */
             :root {
-                --text-display: 48px;
-                --text-heading-lg: 38px;
+                --text-display: 42px;
+                --text-heading-lg: 34px;
                 --text-subheading: 20px;
-                --text-heading: 32px;
+                --text-heading: 28px;
+                --spacing-192: 120px;
+                --spacing-96: 64px;
+                --spacing-56: 32px;
             }
             
             .navbar {
                 padding: var(--spacing-16) 0;
             }
             
+            .nav-container {
+                padding: 0 var(--spacing-20);
+            }
+
             .nav-links {
                 display: none;
             }
 
             .hero-container {
                 grid-template-columns: 1fr;
-                gap: var(--spacing-48);
+                gap: var(--spacing-40);
                 text-align: center;
+                padding: 0 var(--spacing-20);
             }
             
             .hero-intro {
                 margin-left: auto;
                 margin-right: auto;
+                font-size: var(--text-body-sm);
+                line-height: 1.5;
             }
 
             .hero-ctas {
                 justify-content: center;
+                flex-direction: column;
+                width: 100%;
+                gap: var(--spacing-12);
+            }
+
+            .hero-ctas .btn-primary,
+            .hero-ctas .btn-ghost {
+                width: 100%;
+                padding: 14px 24px;
             }
 
             .hero-card-container {
-                height: 380px;
-                max-width: 340px;
+                height: 300px;
+                max-width: 100%;
                 margin: 0 auto;
             }
 
-            .projects-carousel-container {
-                position: relative;
-                width: 100vw;
-                left: 50%;
-                right: 50%;
-                margin-left: -50vw;
-                margin-right: -50vw;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                padding-left: var(--spacing-24);
-                padding-right: 0;
-                padding-bottom: var(--spacing-20);
-                -webkit-overflow-scrolling: touch;
+            .hero-callout-card {
+                padding: var(--spacing-32) var(--spacing-24);
+                border-radius: 24px;
             }
 
-            .projects-carousel-container::-webkit-scrollbar {
-                display: none;
+            .floating-preview-card {
+                display: none; /* Strip overlapping elements out of layout bounding paths */
             }
 
+            /* Absolute Clean Vertical Mobile Stream Integration */
+            .projects-section {
+                padding: var(--spacing-56) 0;
+            }
+
+            .section-container {
+                padding: 0 var(--spacing-20);
+            }
+
+            .section-header {
+                text-align: center;
+                margin-bottom: var(--spacing-32);
+            }
+
+            /* Completely turn off horizontal layout crash; stack clean modern cards */
             .projects-grid {
                 display: flex;
-                flex-wrap: nowrap;
-                gap: var(--spacing-20);
-                width: max-content;
-            }
-            
-            .projects-grid::after {
-                content: '';
-                display: block;
-                width: var(--spacing-24);
-                flex-shrink: 0;
+                flex-direction: column;
+                gap: var(--spacing-24);
+                width: 100%;
             }
 
             .project-card {
-                width: 80vw;
-                max-width: 420px;
-                flex-shrink: 0;
-                scroll-snap-align: center;
-                aspect-ratio: 4 / 3;
+                width: 100%;
+                aspect-ratio: auto;
+                min-height: 160px;
+                border-radius: 20px;
+                background: linear-gradient(135deg, #1f242e 0%, #11151d 100%);
+                border: 1px solid rgba(255, 255, 255, 0.08);
             }
 
-            .project-overlay-link {
-                pointer-events: auto;
-                background-color: transparent;
+            /* Disable live iframes on mobile devices to prevent layout breaking & rendering engine lag */
+            .live-preview-container {
+                display: none !important;
+            }
+
+            .project-overlay {
+                position: relative;
+                padding: var(--spacing-24);
+                background: transparent !important;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: var(--spacing-16);
+            }
+
+            .project-name {
+                margin-bottom: 0;
+                font-size: var(--text-subheading);
+                color: #ffffff;
+            }
+
+            .project-action-tag {
+                transform: none;
+                opacity: 1;
+                background-color: var(--color-canvas-white);
+                color: var(--color-money-max-black);
+                padding: 8px 16px;
+                border-radius: 100px;
+                font-size: 12px;
+                align-self: flex-end;
+            }
+
+            /* Capabilities & About Adjustments */
+            .tech-section {
+                padding: var(--spacing-56) 0;
+            }
+
+            .tech-pills-container {
+                justify-content: center;
+                gap: var(--spacing-8);
+            }
+
+            .tech-pill {
+                padding: 10px 18px;
+                font-size: var(--text-body-sm);
             }
 
             .about-layout {
                 grid-template-columns: 1fr;
-                gap: var(--spacing-24);
+                gap: var(--spacing-16);
+                padding: 0 var(--spacing-20);
+                text-align: center;
             }
 
+            .about-paragraph {
+                font-size: 18px;
+            }
+
+            /* Contact Matrix Overhaul */
             .contact-links-grid {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-12);
             }
             
             .contact-card {
-                padding: var(--spacing-48) var(--spacing-24);
+                padding: var(--spacing-40) var(--spacing-20);
+                border-radius: 28px;
+                text-align: center;
+            }
+
+            .contact-subtitle {
+                margin-bottom: var(--spacing-32);
+            }
+
+            .contact-link-item {
+                padding: var(--spacing-16) var(--spacing-20);
             }
             
             .ambient-gradient {
-                filter: blur(80px);
+                filter: blur(60px);
+                opacity: 0.3;
             }
         }
     </style>
@@ -999,124 +1079,140 @@
                 <p class="section-desc">A deep dive into functional systems, interface deployments, and interactive spaces.</p>
             </div>
             
-            <div class="projects-carousel-container">
-                <div class="projects-grid">
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/bronze-wagon/" title="Bronze Wagon Preview"></iframe>
-                        </div>
-                        <a href="https://rrcee.github.io/bronze-wagon/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+            <div class="projects-grid">
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/bronze-wagon/" title="Bronze Wagon Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/bronze-wagon/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Interactive Web Experience</span>
                                 <h4 class="project-name">Bronze Wagon</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
-
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/fh5/" title="Horizon Showcase Preview"></iframe>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                         </div>
-                        <a href="https://rrcee.github.io/fh5/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+                    </a>
+                </div>
+
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/fh5/" title="Horizon Showcase Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/fh5/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Immersive Gaming UI</span>
                                 <h4 class="project-name">Horizon Showcase (FH5)</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
-
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/milesmorales/" title="Miles Morales Tribute Preview"></iframe>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                         </div>
-                        <a href="https://rrcee.github.io/milesmorales/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+                    </a>
+                </div>
+
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/milesmorales/" title="Miles Morales Tribute Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/milesmorales/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Creative Motion Design</span>
                                 <h4 class="project-name">Miles Morales Tribute</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
-
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/MomentumLabs/" title="MomentumLabs Preview"></iframe>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                         </div>
-                        <a href="https://rrcee.github.io/MomentumLabs/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+                    </a>
+                </div>
+
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/MomentumLabs/" title="MomentumLabs Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/MomentumLabs/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Premium SaaS Layout Concept</span>
                                 <h4 class="project-name">MomentumLabs</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
-
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/Pomo/" title="Pomo Productivity Preview"></iframe>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                         </div>
-                        <a href="https://rrcee.github.io/Pomo/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+                    </a>
+                </div>
+
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/Pomo/" title="Pomo Productivity Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/Pomo/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Minimalist Application Utility</span>
                                 <h4 class="project-name">Pomo Productivity</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
-
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/Dapotribe/" title="Dapotribe Preview"></iframe>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                         </div>
-                        <a href="https://rrcee.github.io/Dapotribe/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+                    </a>
+                </div>
+
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/Dapotribe/" title="Dapotribe Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/Dapotribe/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Culture & Digital Layout Design</span>
                                 <h4 class="project-name">Dapotribe</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
-
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/pokedex/" title="Pokédex Minimal Preview"></iframe>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                         </div>
-                        <a href="https://rrcee.github.io/pokedex/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+                    </a>
+                </div>
+
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/pokedex/" title="Pokédex Minimal Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/pokedex/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Minimalist Data/API Web App</span>
                                 <h4 class="project-name">Pokédex Minimal</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
-
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/carsmainly/" title="Carsmainly Preview"></iframe>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                         </div>
-                        <a href="https://rrcee.github.io/carsmainly/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+                    </a>
+                </div>
+
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/carsmainly/" title="Carsmainly Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/carsmainly/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Editorial Visual Space</span>
                                 <h4 class="project-name">Carsmainly</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
-
-                    <div class="project-card" data-tilt>
-                        <div class="live-preview-container">
-                            <iframe src="https://rrcee.github.io/mp33/" title="MP33 Engine Preview"></iframe>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                         </div>
-                        <a href="https://rrcee.github.io/mp33/" target="_blank" class="project-overlay-link">
-                            <div class="project-overlay">
+                    </a>
+                </div>
+
+                <div class="project-card" data-tilt>
+                    <div class="live-preview-container">
+                        <iframe src="https://rrcee.github.io/mp33/" title="MP33 Engine Preview"></iframe>
+                    </div>
+                    <a href="https://rrcee.github.io/mp33/" target="_blank" class="project-overlay-link">
+                        <div class="project-overlay">
+                            <div>
                                 <span class="project-category">Immersive Audio Experience</span>
                                 <h4 class="project-name">MP33 Engine</h4>
-                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
                             </div>
-                        </a>
-                    </div>
+                            <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1125,7 +1221,7 @@
     <section class="tech-section scroll-reveal">
         <div class="section-container">
             <div class="section-header">
-                <h2 class="section-title font-greed-condensed-700">Capabilities</h2>
+                <h2 class="section-title font-greed-condensed-700">Capabilities Matrix</h2>
             </div>
             <div class="tech-pills-container">
                 <div class="tech-pill scroll-reveal-pill">HTML5 & CSS3 Architecture</div>
@@ -1178,13 +1274,13 @@
                     </a>
                     <div class="contact-link-item" title="Discord Username: imthatmadman">
                         <span class="link-label">imthatmadman</span>
-                        <span class="link-arrow">on discord</span>
+                        <span class="link-arrow">@</span>
                     </div>
                 </div>
             </div>
             
             <footer class="footer-bottom">
-                <p>&copy; 2026 Rishi Rohith. </p>
+                <p>&copy; 2026 Rishi Rohith. Built with precision and intent.</p>
             </footer>
         </div>
     </section>
