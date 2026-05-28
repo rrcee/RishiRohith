@@ -3,987 +3,1296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rishi Rohith | Portfolio</title>
+    <title>Rishi Rohith — Portfolio</title>
     <style>
-        /* --- CLEAN DESIGN SYSTEM --- */
+        /* ==========================================================================
+           FLUZ DESIGN TOKEN ARCHITECTURE & CONFIGURATION
+           ========================================================================== */
         :root {
-            --bg-base: #F5F3FF;
-            --pure-white: #FFFFFF;
-            --text-primary: #1E1B4B;
-            --text-sub: #4F46E5;
-            --blush-purple: #D8B4FE;
-            --deep-violet: #8B5CF6;
-            --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            /* Colors */
+            --color-money-max-black: #1a0000;
+            --color-sky-blue: #98bbf4;
+            --color-forest-noir: #11190c;
+            --color-canvas-white: #ffffff;
+            --color-mist-gray: #f2f2f2;
+            --color-light-cloud: #ededec;
+            --color-iron-slate: #3a3a3a;
+            --color-onyx-shadow: #221919;
+            --color-subtle-ash: #514f4c;
+            --color-pebble-gray: #aeaea6;
+            
+            /* Gradients */
+            --gradient-hero-horizontal: linear-gradient(90deg, rgb(130, 190, 255), rgb(166, 180, 247) 47.21%, rgb(91, 184, 154) 73.75%, rgb(33, 186, 76) 91.26%);
+            --gradient-hero-vertical: linear-gradient(0deg, rgb(125, 180, 244) 25%, rgb(147, 180, 246) 38%, rgb(166, 180, 247) 47%, rgb(104, 184, 171) 83%, rgb(33, 186, 76) 99%);
+            --gradient-dark-bg: linear-gradient(rgb(38, 34, 33) 26%, rgb(86, 71, 67) 100%);
+
+            /* Typography Scale Metrics */
+            --text-caption: 11px;
+            --leading-caption: 1.4;
+            --text-body-sm: 14px;
+            --leading-body-sm: 1.29;
+            --text-body: 16px;
+            --leading-body: 1.4;
+            --text-subheading: 24px;
+            --leading-subheading: 1.25;
+            --tracking-subheading: -0.016em;
+            --text-heading: 42px;
+            --leading-heading: 1.15;
+            --tracking-heading: -0.025em;
+            --text-heading-lg: 64px;
+            --leading-heading-lg: 1;
+            --tracking-heading-lg: -0.025em;
+            --text-display: 96px;
+            --leading-display: 0.91;
+            --tracking-display: -0.035em;
+
+            /* Structural Spacing Rules */
+            --spacing-4: 4px;
+            --spacing-8: 8px;
+            --spacing-12: 12px;
+            --spacing-16: 16px;
+            --spacing-20: 20px;
+            --spacing-24: 24px;
+            --spacing-32: 32px;
+            --spacing-40: 40px;
+            --spacing-48: 48px;
+            --spacing-56: 56px;
+            --spacing-96: 96px;
+            --spacing-140: 140px;
+            --spacing-192: 192px;
+
+            /* System Layout Constraints */
+            --page-max-width: 1750px;
+            --section-gap: 40px;
+            --card-padding: 20px;
+
+            /* Border Radius Definitions */
+            --radius-cards: 20px;
+            --radius-images: 20px;
+            --radius-buttons-ghost: 100px;
+            --radius-buttons-primary: 200px;
         }
 
+        /* ==========================================================================
+           BASE STYLES & RESET
+           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent;
         }
 
         html {
-            scroll-behavior: smooth;
-            background-color: var(--bg-base);
+            scroll-behavior: initial;
+            background-color: var(--color-canvas-white);
+            color: var(--color-money-max-black);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow-x: hidden;
         }
 
         body {
-            width: 100%;
             overflow-x: hidden;
-            color: var(--text-primary);
-            font-family: var(--font-sans);
-            background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 40%, #D8B4FE 80%, #F5F3FF 100%);
-            background-attachment: fixed;
-            background-size: cover;
-            perspective: 1200px;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .blur-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 1;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            background: rgba(245, 243, 255, 0.15);
-            pointer-events: none;
+        .font-area-semibold {
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
 
-        /* AUDIO HUD INDICATOR */
-        .audio-hud-control {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 2000;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(216, 180, 254, 0.6);
-            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
-            transition: all 0.3s ease;
+        .font-greed-condensed-700 {
+            font-family: 'Inter Tight', 'Arial Black', -apple-system, sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-stretch: condensed;
         }
-        .audio-hud-control:hover {
-            transform: scale(1.05);
-            background: var(--pure-white);
+
+        /* ==========================================================================
+           GLARE ON LOAD ENGINE STRUCTURES
+           ========================================================================== */
+        .onload-glare {
+            position: relative;
+            overflow: hidden;
         }
-        .audio-waves {
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            width: 18px;
-            height: 16px;
-        }
-        .audio-waves span {
-            display: block;
-            width: 2px;
-            background: var(--deep-violet);
-            border-radius: 2px;
+
+        .glare-sweep-onload {
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 60%;
             height: 100%;
-            transform-origin: bottom;
-            animation: bounceWave 1.2s ease infinite alternate;
-            animation-play-state: paused;
-        }
-        .audio-waves span:nth-child(2) { animation-delay: 0.3s; height: 60%; }
-        .audio-waves span:nth-child(3) { animation-delay: 0.6s; height: 80%; }
-        
-        .playing-state .audio-waves span {
-            animation-play-state: running;
-        }
-        .muted-state .audio-waves span {
-            animation: none !important;
-            height: 2px !important;
-            background: var(--text-primary);
-            opacity: 0.4;
-        }
-
-        @keyframes bounceWave {
-            0% { transform: scaleY(0.2); }
-            100% { transform: scaleY(1); }
-        }
-
-        /* DYNAMIC BACKGROUND GRID */
-        .parallax-grid-bg {
-            position: fixed;
-            width: 120vw; height: 120vh;
-            top: -10vh; left: -10vw;
-            background-image: 
-                linear-gradient(to right, rgba(139, 92, 246, 0.06) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
-            background-size: 60px 60px;
-            z-index: 2;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-30deg);
             pointer-events: none;
-            transform: translateZ(-100px);
-            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 5;
+            animation: sweepOnLoad 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
         }
 
-        /* --- GLASS PANELS & SHIMMER LOADING PRESETS --- */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.45);
+        @keyframes sweepOnLoad {
+            0% { left: -150%; }
+            100% { left: 250%; }
+        }
+
+        /* ==========================================================================
+           AMBIENT BACKGROUND MOTION OBJECTS
+           ========================================================================== */
+        .gradient-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            background-color: var(--color-canvas-white);
+        }
+
+        .ambient-gradient {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.45;
+            transform: translate3d(0,0,0);
+            will-change: transform;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #ambient-1 {
+            top: -20%;
+            right: -10%;
+            width: 70vw;
+            height: 70vw;
+            background: var(--gradient-hero-horizontal);
+        }
+
+        #ambient-2 {
+            bottom: -30%;
+            left: -20%;
+            width: 80vw;
+            height: 80vw;
+            background: var(--gradient-hero-vertical);
+        }
+
+        /* ==========================================================================
+           NAVIGATION BAR
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: var(--spacing-24) 0;
+            transition: padding 0.4s ease, background-color 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            padding: var(--spacing-16) 0;
+            background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(216, 180, 254, 0.5);
-            box-shadow: 0 20px 45px rgba(216, 180, 254, 0.1);
-            border-radius: 24px;
+            border-bottom: 1px solid rgba(26, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: var(--page-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-40);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: var(--text-subheading);
+            font-weight: 800;
+            color: var(--color-money-max-black);
+            text-decoration: none;
+            letter-spacing: -0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-32);
+        }
+
+        .nav-link {
+            font-size: var(--text-body-sm);
+            color: var(--color-subtle-ash);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-money-max-black);
+        }
+
+        .nav-link-btn {
+            font-size: var(--text-body-sm);
+            color: var(--color-canvas-white);
+            background-color: var(--color-money-max-black);
+            text-decoration: none;
+            padding: var(--spacing-8) var(--spacing-20);
+            border-radius: var(--radius-buttons-ghost);
+            font-weight: 600;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        }
+
+        /* ==========================================================================
+           BUTTON ARCHITECTURE
+           ========================================================================== */
+        .btn-primary {
             position: relative;
-            transform-style: preserve-3d;
-            backface-visibility: hidden;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s, background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-money-max-black);
+            color: var(--color-canvas-white);
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: var(--radius-buttons-primary);
+            font-size: var(--text-body);
+            font-weight: 700;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            border: none;
+            cursor: pointer;
         }
 
-        /* LAZY-LOADED MEDIA SHIMMER LAYER */
-        .glass-panel.loading-shimmer::before {
-            content: '';
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 16px 36px rgba(26, 0, 0, 0.22);
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0);
+            color: var(--color-forest-noir);
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: var(--radius-buttons-primary);
+            font-size: var(--text-body);
+            font-weight: 600;
+            border: 1px solid var(--color-forest-noir);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-ghost:hover {
+            background-color: var(--color-light-cloud);
+            transform: translateY(-2px);
+        }
+
+        .glare-sweep {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 23px;
-            background: linear-gradient(
-                90deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.4) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            background-size: 200% 100%;
-            animation: cardShimmerSweep 1.6s infinite linear;
-            z-index: 5;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
             pointer-events: none;
-            transition: opacity 0.4s ease;
         }
 
-        .glass-panel.loading-shimmer * {
+        .btn-primary:hover .glare-sweep {
+            animation: sweep 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes sweep {
+            100% { left: 200%; }
+        }
+
+        /* ==========================================================================
+           1) HERO SECTION
+           ========================================================================== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-192) 0 var(--spacing-96) 0;
+            max-width: var(--page-max-width);
+            margin: 0 auto;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: var(--spacing-56);
+            padding: 0 var(--spacing-40);
+            width: 100%;
+            align-items: center;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: var(--text-display);
+            line-height: var(--leading-display);
+            letter-spacing: var(--tracking-display);
+            color: var(--color-money-max-black);
+            margin-bottom: var(--spacing-16);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-subtitle {
+            font-size: var(--text-subheading);
+            line-height: var(--leading-subheading);
+            color: var(--color-subtle-ash);
+            margin-bottom: var(--spacing-24);
+        }
+
+        .hero-intro {
+            font-size: var(--text-body);
+            line-height: var(--leading-body);
+            color: var(--color-money-max-black);
+            font-weight: 600;
+            max-width: 540px;
+            margin-bottom: var(--spacing-40);
+        }
+
+        .hero-ctas {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-20);
+        }
+
+        .hero-right {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-card-container {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            height: 480px;
+        }
+
+        .hero-callout-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-sky-blue);
+            border-radius: 40px;
+            padding: var(--spacing-56) var(--spacing-40);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            box-shadow: 0 32px 64px rgba(152, 187, 244, 0.3);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.2s ease;
+        }
+
+        .card-gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-hero-vertical);
             opacity: 0.15;
             pointer-events: none;
         }
 
-        @keyframes cardShimmerSweep {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* --- STICKY NAVIGATION HUD --- */
-        .system-header {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            height: 80px;
-            padding: 0 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(245, 243, 255, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(216, 180, 254, 0.25);
-        }
-
-        .brand-logo {
-            font-size: 0.9rem;
+        .hero-callout-card h3 {
+            font-family: 'Inter Tight', -apple-system, sans-serif;
             font-weight: 800;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-primary);
-            position: relative;
+            font-size: var(--text-heading);
+            line-height: var(--leading-heading);
+            letter-spacing: var(--tracking-heading);
+            color: var(--color-money-max-black);
+            z-index: 1;
         }
 
-        .brand-logo::after {
-            content: '';
+        .pill-decoration {
+            width: 60px;
+            height: 6px;
+            background-color: var(--color-money-max-black);
+            border-radius: 10px;
+            margin-top: var(--spacing-16);
+            display: block;
+        }
+
+        .floating-preview-card {
             position: absolute;
-            bottom: -4px; left: 0; width: 12px; height: 2px;
-            background: var(--deep-violet);
-        }
-
-        .menu-toggle {
+            bottom: -30px;
+            right: -30px;
+            width: 190px;
+            height: 105px;
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius-cards);
+            padding: var(--spacing-24) var(--spacing-20);
+            box-shadow: 0 16px 32px rgba(26, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-            width: 28px; height: 28px;
-            z-index: 1200;
+            gap: var(--spacing-12);
+            pointer-events: none;
         }
 
-        .menu-toggle span {
-            width: 100%; height: 2px;
-            background: var(--text-primary);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        .preview-line-short {
+            width: 55px;
+            height: 5px;
+            background-color: var(--color-subtle-ash);
+            border-radius: 3px;
+            opacity: 0.8;
         }
 
-        /* DESKTOP SIDE BAR PANEL NAVIGATION */
-        .nav-links {
-            position: fixed;
-            top: 0; right: -100%;
-            width: 320px; height: 100vh;
-            background: rgba(245, 243, 255, 0.9);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
-            border-left: 1px solid rgba(216, 180, 254, 0.5);
-            display: flex;
-            flex-direction: column;
-            padding: 140px 40px;
-            gap: 16px;
-            list-style: none;
-            transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 1050;
+        .preview-line-long {
+            width: 110px;
+            height: 5px;
+            background-color: rgba(26, 0, 0, 0.15);
+            border-radius: 3px;
         }
 
-        .nav-links.menu-open { right: 0; }
-
-        .nav-tab {
-            display: block;
-            padding: 14px 28px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-sub);
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 30px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .nav-tab:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.6);
-        }
-
-        .menu-open-state span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-        .menu-open-state span:nth-child(2) { opacity: 0; }
-        .menu-open-state span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-        /* PREMIUM BOTTOM SHEET MOBILE HUD SYSTEM */
-        .mobile-hud-navigation {
-            display: none;
-        }
-
-        /* --- LAYOUT MATRIX --- */
-        .scroll-stage {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 1200px;
+        /* ==========================================================================
+           2) FEATURED PROJECTS SECTION (LIVE IFRAME PREVIEWS)
+           ========================================================================== */
+        .projects-section {
+            padding: var(--spacing-96) 0;
+            max-width: var(--page-max-width);
             margin: 0 auto;
         }
 
-        section {
-            width: 100%;
-            min-height: 100vh;
-            padding: 140px 24px 80px 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .section-container {
+            padding: 0 var(--spacing-40);
+        }
+
+        .section-header {
+            margin-bottom: var(--spacing-56);
+            max-width: 600px;
         }
 
         .section-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 50px;
-            text-align: center;
-            text-transform: uppercase;
-            color: var(--text-primary);
+            font-size: var(--text-heading-lg);
+            line-height: var(--leading-heading-lg);
+            letter-spacing: var(--tracking-heading-lg);
+            color: var(--color-money-max-black);
+            margin-bottom: var(--spacing-12);
         }
 
-        .section-title span { color: var(--deep-violet); }
-
-        /* --- HERO HOME --- */
-        .hero-center { text-align: center; max-width: 750px; }
-        .hero-title {
-            font-size: clamp(2.8rem, 7vw, 5.5rem);
-            font-weight: 900;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-        .hero-title span { color: var(--deep-violet); }
-        .hero-tagline { font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 600; letter-spacing: 0.05em; color: var(--text-sub); margin-bottom: 20px; }
-        .hero-subtext { font-size: 1rem; color: var(--text-sub); max-width: 560px; margin: 0 auto; line-height: 1.7; }
-
-        /* --- IPOD COVERFLOW WORK STACK --- */
-        .work-layout {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            width: 100%;
+        .section-desc {
+            font-size: var(--text-body);
+            color: var(--color-subtle-ash);
         }
 
-        .carousel-viewport {
-            width: 100%;
-            height: 480px;
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
-            perspective: 1000px;
-        }
-
-        .carousel-container {
-            display: flex; align-items: center; justify-content: center;
-            position: relative; width: 100%; height: 100%;
-            transform-style: preserve-3d;
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-40);
         }
 
         .project-card {
+            position: relative;
+            border-radius: var(--radius-cards);
+            overflow: hidden;
+            background-color: var(--color-mist-gray);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            aspect-ratio: 16 / 11;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+
+        .live-preview-container {
+            width: 100%;
+            height: 100%;
             position: absolute;
-            width: 300px; height: 410px;
-            padding: 30px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            cursor: pointer;
-            user-select: none;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .project-meta { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--deep-violet); font-weight: 700; margin-bottom: 6px; }
-        .project-name { font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; }
-        .project-desc { font-size: 0.85rem; color: var(--text-primary); opacity: 0.8; line-height: 1.5; }
-
-        .project-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 12px; border-radius: 12px; background: var(--pure-white);
-            border: 1px solid rgba(216, 180, 254, 0.5); color: var(--text-primary);
-            font-size: 0.85rem; font-weight: 700; text-decoration: none;
-            transition: all 0.3s ease; width: 100%;
-            transform: translateZ(20px);
+        .live-preview-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            transform: scale(1.01);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .project-btn:hover { background: var(--deep-violet); color: var(--pure-white); border-color: transparent; }
-        
-        .carousel-nav { display: flex; gap: 15px; }
-        .carousel-arrow { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
-        .carousel-arrow:hover { background: var(--pure-white); transform: scale(1.05); border-color: var(--deep-violet); }
-        .carousel-arrow svg { width: 14px; height: 14px; fill: var(--text-primary); }
 
-        /* --- ARTISTIC VISION SECTION --- */
-        .about-box { max-width: 780px; padding: 50px; text-align: center; }
-        .about-para { font-size: 1.25rem; line-height: 1.8; color: var(--text-primary); }
-        .about-para span.highlight { font-weight: 700; color: var(--deep-violet); }
-
-        /* --- MEDIUMS MATRIX --- */
-        .languages-grid { display: flex; justify-content: center; gap: 24px; width: 100%; max-width: 900px; flex-wrap: wrap; }
-        .lang-pill {
-            padding: 30px; display: flex; flex-direction: column;
-            align-items: center; gap: 8px; min-width: 260px; flex: 1;
-        }
-        .lang-pill:hover { background: var(--pure-white); border-color: var(--deep-violet); }
-        .lang-title { font-size: 1.2rem; font-weight: 800; color: var(--text-primary); text-align: center; }
-        .lang-proficiency { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--deep-violet); text-transform: uppercase; font-weight: 700; }
-
-        /* --- NETWORK ROUTERS --- */
-        .socials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; width: 100%; max-width: 700px; }
-        .social-card {
-            padding: 35px; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; gap: 10px;
+        .project-overlay-link {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
             text-decoration: none;
         }
-        .social-card:hover { background: var(--pure-white); border-color: var(--deep-violet); }
-        .social-platform { font-size: 0.75rem; letter-spacing: 0.15em; color: var(--text-sub); text-transform: uppercase; font-weight: 700; }
-        .social-handle { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
 
-        .system-footer {
-            width: 100%; height: 80px; display: flex; align-items: center; justify-content: center;
-            font-size: 0.75rem; color: var(--text-sub); letter-spacing: 0.12em;
-            border-top: 1px solid rgba(216, 180, 254, 0.2); font-weight: 600; text-align: center; padding: 0 20px;
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: var(--spacing-32);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: linear-gradient(to top, rgba(26, 0, 0, 0.9) 0%, rgba(26, 0, 0, 0.3) 50%, rgba(26, 0, 0, 0.1) 100%);
+            transition: background-color 0.4s ease;
         }
 
-        /* --- MOBILE SCREEN MEDIA OVERRIDES --- */
-        @media (max-width: 768px) {
-            body {
-                background: linear-gradient(-45deg, #F5F3FF, #EDE9FE, #E0D7FF, #F3E8FF);
-                background-size: 400% 400%;
-                animation: mobileFluidGradient 12s ease infinite;
-            }
-            
-            .parallax-grid-bg, .hud-actions, .nav-links { display: none !important; }
-            
-            section {
-                min-height: auto;
-                padding: 70px 16px 40px 16px;
-            }
-            .system-header { padding: 0 20px; height: 65px; justify-content: center; }
-            
-            .carousel-viewport { 
-                height: 420px; 
-                width: 100%;
-                overflow: hidden; 
-                touch-action: pan-y;
-            }
-            .project-card { 
-                width: 240px; 
-                height: 350px;
-                padding: 24px;
-            }
-            
-            .carousel-nav {
-                display: flex;
-                margin-top: -5px;
-                gap: 28px;
-            }
-            .carousel-arrow { 
-                width: 54px; 
-                height: 54px; 
-                background: rgba(255, 255, 255, 0.7);
-            }
-            .carousel-arrow svg {
-                width: 22px;
-                height: 22px;
-            }
-            
-            .languages-grid { flex-direction: column; width: 100%; gap: 14px; }
-            .lang-pill { min-width: 100%; padding: 20px; }
-            
-            .socials-grid { grid-template-columns: 1fr; gap: 14px; }
-            .social-card { padding: 22px; }
-            
-            .about-box { padding: 30px 20px; text-align: center; }
-            .hero-title { margin-bottom: 12px; }
+        .project-category {
+            font-size: var(--text-caption);
+            font-weight: 600;
+            color: var(--color-sky-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-4);
+        }
 
-            .audio-hud-control {
-                bottom: 100px;
-                right: 20px;
-                width: 44px;
-                height: 44px;
+        .project-name {
+            font-size: var(--text-subheading);
+            font-weight: 700;
+            color: var(--color-canvas-white);
+            letter-spacing: -0.02em;
+            margin-bottom: var(--spacing-12);
+        }
+
+        .project-action-tag {
+            font-size: var(--text-body-sm);
+            color: var(--color-canvas-white);
+            transform: translateY(5px);
+            opacity: 0.85;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        @media (min-width: 769px) {
+            .project-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 24px 48px rgba(26, 0, 0, 0.2);
             }
 
-            .system-footer {
-                padding-bottom: 110px;
+            .project-card:hover .live-preview-container iframe {
+                transform: scale(1.05);
             }
 
-            /* BOTTOM SHELF NAVIGATION DESIGN */
-            .mobile-hud-navigation {
-                display: flex;
-                position: fixed;
-                bottom: 24px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: calc(100% - 32px);
-                max-width: 460px;
-                height: 64px;
-                background: rgba(255, 255, 255, 0.7);
-                backdrop-filter: blur(25px);
-                -webkit-backdrop-filter: blur(25px);
-                border: 1px solid rgba(255, 255, 255, 0.5);
-                box-shadow: 0 12px 35px rgba(139, 92, 246, 0.18);
-                border-radius: 32px;
-                z-index: 9999;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 10px;
+            .project-card:hover .project-overlay {
+                background: linear-gradient(to top, rgba(26, 0, 0, 0.95) 0%, rgba(26, 0, 0, 0.1) 40%, rgba(26, 0, 0, 0) 100%);
             }
-            
-            .mobile-hud-btn {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                height: 100%;
-                text-decoration: none;
-                color: var(--text-primary);
-                opacity: 0.5;
-                font-size: 0.62rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                gap: 5px;
-                transition: all 0.25s ease;
-            }
+        }
 
-            .mobile-hud-btn svg {
-                width: 18px;
-                height: 18px;
-                fill: none;
-                stroke: var(--text-primary);
-                stroke-width: 2.2;
-                stroke-linecap: round;
-                stroke-linejoin: round;
-                transition: all 0.25s ease;
-            }
+        /* ==========================================================================
+           3) DIGITAL SKILLS SECTION
+           ========================================================================== */
+        .tech-section {
+            padding: var(--spacing-96) 0;
+            max-width: var(--page-max-width);
+            margin: 0 auto;
+        }
 
-            .mobile-hud-btn.active-hud-tab {
+        .tech-pills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-16);
+            max-width: 900px;
+        }
+
+        .tech-pill {
+            background-color: var(--color-mist-gray);
+            color: var(--color-money-max-black);
+            padding: var(--spacing-12) var(--spacing-24);
+            border-radius: var(--radius-buttons-ghost);
+            font-size: var(--text-body);
+            font-weight: 600;
+            border: 1px solid var(--color-light-cloud);
+            transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            cursor: default;
+        }
+
+        .tech-pill:hover {
+            background-color: var(--color-money-max-black);
+            color: var(--color-canvas-white);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 24px rgba(26, 0, 0, 0.1);
+        }
+
+        /* ==========================================================================
+           4) ABOUT SECTION
+           ========================================================================== */
+        .about-section {
+            padding: var(--spacing-96) 0;
+            max-width: var(--page-max-width);
+            margin: 0 auto;
+        }
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: var(--spacing-56);
+            padding: 0 var(--spacing-40);
+        }
+
+        .about-right {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-24);
+        }
+
+        .about-paragraph {
+            font-size: var(--text-subheading);
+            line-height: 1.45;
+            color: var(--color-money-max-black);
+        }
+
+        .about-paragraph.secondary {
+            font-size: var(--text-body);
+            color: var(--color-subtle-ash);
+        }
+
+        /* ==========================================================================
+           5) CONTACT SECTION & FOOTER
+           ========================================================================== */
+        .contact-section {
+            padding: var(--spacing-96) 0 var(--spacing-40) 0;
+            max-width: var(--page-max-width);
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            position: relative;
+            background-color: var(--color-onyx-shadow);
+            border-radius: 40px;
+            padding: var(--spacing-96) var(--spacing-56);
+            overflow: hidden;
+            margin-bottom: var(--spacing-96);
+        }
+
+        .contact-gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-dark-bg);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .contact-title {
+            position: relative;
+            font-size: var(--text-heading-lg);
+            color: var(--color-canvas-white);
+            margin-bottom: var(--spacing-16);
+            z-index: 2;
+        }
+
+        .contact-subtitle {
+            position: relative;
+            font-size: var(--text-body);
+            color: var(--color-pebble-gray);
+            margin-bottom: var(--spacing-56);
+            max-width: 480px;
+            z-index: 2;
+        }
+
+        .contact-links-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-20);
+            z-index: 2;
+        }
+
+        .contact-link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: var(--spacing-24);
+            border-radius: var(--radius-cards);
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .contact-link-item .link-label {
+            font-size: var(--text-body);
+            font-weight: 600;
+            color: var(--color-canvas-white);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-link-item .link-arrow {
+            font-size: var(--text-body);
+            color: var(--color-pebble-gray);
+            transition: transform 0.3s ease, color 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+
+        .contact-link-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid var(--color-light-cloud);
+            padding-top: var(--spacing-40);
+            color: var(--color-pebble-gray);
+            font-size: var(--text-caption);
+        }
+
+        /* ==========================================================================
+           ANIMATION CONTROLS & REVEALS
+           ========================================================================== */
+        .blur-up-reveal {
+            opacity: 0;
+            filter: blur(20px);
+            transform: translateY(30px);
+            animation: blurToSharp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes blurToSharp {
+            0% {
+                opacity: 0;
+                filter: blur(20px);
+                transform: translateY(30px);
+            }
+            100% {
                 opacity: 1;
-                color: var(--deep-violet);
-            }
-
-            .mobile-hud-btn.active-hud-tab svg {
-                stroke: var(--deep-violet);
-                transform: translateY(-2px);
+                filter: blur(0);
+                transform: translateY(0);
             }
         }
 
-        @keyframes mobileFluidGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-reveal-text {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        .scroll-reveal-pill {
+            opacity: 0;
+            transform: scale(0.9) translateY(15px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-reveal-pill.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* ==========================================================================
+           RESPONSIVE LAYOUT MATRIX & MOBILE CAROUSEL ENGINE
+           ========================================================================== */
+        @media (max-width: 1200px) {
+            :root {
+                --text-display: 76px;
+                --text-heading-lg: 52px;
+            }
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .contact-links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --text-display: 48px;
+                --text-heading-lg: 38px;
+                --text-subheading: 20px;
+                --text-heading: 32px;
+            }
+            
+            .navbar {
+                padding: var(--spacing-16) 0;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-48);
+                text-align: center;
+            }
+            
+            .hero-intro {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-ctas {
+                justify-content: center;
+            }
+
+            .hero-card-container {
+                height: 380px;
+                max-width: 340px;
+                margin: 0 auto;
+            }
+
+            .projects-carousel-container {
+                position: relative;
+                width: 100vw;
+                left: 50%;
+                right: 50%;
+                margin-left: -50vw;
+                margin-right: -50vw;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                padding-left: var(--spacing-24);
+                padding-right: 0;
+                padding-bottom: var(--spacing-20);
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .projects-carousel-container::-webkit-scrollbar {
+                display: none;
+            }
+
+            .projects-grid {
+                display: flex;
+                flex-wrap: nowrap;
+                gap: var(--spacing-20);
+                width: max-content;
+            }
+            
+            .projects-grid::after {
+                content: '';
+                display: block;
+                width: var(--spacing-24);
+                flex-shrink: 0;
+            }
+
+            .project-card {
+                width: 80vw;
+                max-width: 420px;
+                flex-shrink: 0;
+                scroll-snap-align: center;
+                aspect-ratio: 4 / 3;
+            }
+
+            .project-overlay-link {
+                pointer-events: auto;
+                background-color: transparent;
+            }
+
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-24);
+            }
+
+            .contact-links-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-12);
+            }
+            
+            .contact-card {
+                padding: var(--spacing-48) var(--spacing-24);
+            }
+            
+            .ambient-gradient {
+                filter: blur(80px);
+            }
         }
     </style>
 </head>
-<body>
+<body class="onload-glare">
 
-    <!-- BACKDROP SYSTEMS -->
-    <div class="blur-overlay"></div>
-    <div class="parallax-grid-bg" id="parallaxGrid"></div>
+    <div class="glare-sweep-onload"></div>
 
-    <!-- LOCAL DIRECTORY AUDIO TRACK -->
-    <audio id="bgMusicTrack" loop preload="auto">
-        <source src="audio.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- LIVE DYNAMIC HUD TOGGLE CONTROLLER -->
-    <div class="audio-hud-control muted-state" id="audioHudTrigger">
-        <div class="audio-waves">
-            <span></span><span></span><span></span>
-        </div>
+    <div class="gradient-bg-container">
+        <div id="ambient-1" class="ambient-gradient"></div>
+        <div id="ambient-2" class="ambient-gradient"></div>
     </div>
 
-    <!-- TOP DESKTOP NAVIGATION HUB -->
-    <header class="system-header">
-        <div class="brand-logo">Rishi Rohith</div>
-        <div class="hud-actions">
-            <div class="menu-toggle" id="menuToggle">
-                <span></span><span></span><span></span>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo font-greed-condensed-700">Rishi Rohith</a>
+            <div class="nav-links">
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link-btn">Get In Touch</a>
             </div>
         </div>
-        
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#home" class="nav-tab">Home</a></li>
-            <li><a href="#work" class="nav-tab">Work</a></li>
-            <li><a href="#vision" class="nav-tab">Vision</a></li>
-            <li><a href="#toolkit" class="nav-tab">Toolkit</a></li>
-            <li><a href="#network" class="nav-tab">Reach Out</a></li>
-        </ul>
-    </header>
-
-    <!-- PREMIUM INTEGRATED MOBILE HUD BOTTOM PANEL -->
-    <nav class="mobile-hud-navigation">
-        <a href="#home" class="mobile-hud-btn active-hud-tab">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>Home</span>
-        </a>
-        <a href="#work" class="mobile-hud-btn">
-            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-            <span>Projects</span>
-        </a>
-        <a href="#vision" class="mobile-hud-btn">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            <span>Vision</span>
-        </a>
-        <a href="#toolkit" class="mobile-hud-btn">
-            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-            <span>Toolkit</span>
-        </a>
-        <a href="#network" class="mobile-hud-btn">
-            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <span>Contact</span>
-        </a>
     </nav>
 
-    <div class="scroll-stage">
-        
-        <!-- SECTION 1: HOME -->
-        <section id="home">
-            <div class="hero-center">
-                <h1 class="hero-title">Rishi <span>Rohith</span></h1>
-                <p class="hero-tagline">Visual Artist • Director • Storyteller</p>
-                <p class="hero-subtext">Capturing spatial atmospheres, interaction physics, and cinematic concepts across modern digital mediums.</p>
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-left blur-up-reveal">
+                <h1 class="hero-title font-greed-condensed-700">Creative Technologist</h1>
+                <h2 class="hero-subtitle font-area-semibold">Operating at the intersection of logic and interface design.</h2>
+                <p class="hero-intro">
+                    I love the sweet spot between frontend logic and motion design. To me, great interfaces feel alive. They respond to the user through smooth transitions, bold type choices, and thoughtful spacing.
+                </p>
+                <div class="hero-ctas">
+                    <a href="#projects" class="btn-primary">
+                        View Work <div class="glare-sweep"></div>
+                    </a>
+                    <a href="#contact" class="btn-ghost">Let's Talk</a>
+                </div>
             </div>
-        </section>
-
-        <!-- SECTION 2: WORK -->
-        <section id="work">
-            <h2 class="section-title">Selected <span>Projects</span></h2>
-            <div class="work-layout">
-                <div class="carousel-viewport" id="carouselViewport">
-                    <div class="carousel-container" id="carouselContainer">
+            
+            <div class="hero-right">
+                <div class="hero-card-container" data-parallax-speed="-0.03">
+                    <div class="hero-callout-card" data-tilt>
+                        <div class="card-gradient-overlay"></div>
+                        <h3 class="font-greed-condensed-700">Your World<br>On Max</h3>
+                        <div class="pill-decoration"></div>
                         
-                        <div class="project-card glass-panel loading-shimmer" data-index="0">
-                            <div>
-                                <div class="project-meta">Virtual Capture</div>
-                                <h3 class="project-name">FH5</h3>
-                                <p class="project-desc">Forza Horizon 5 in-game photography collection capturing high-speed telemetry, light, and automotive design.</p>
-                            </div>
-                            <a href="https://rrcee.github.io/fh5/" target="_blank" class="project-btn">Visit Site</a>
+                        <div class="floating-preview-card">
+                            <div class="preview-line-short"></div>
+                            <div class="preview-line-long"></div>
                         </div>
-
-                        <div class="project-card glass-panel loading-shimmer" data-index="1">
-                            <div>
-                                <div class="project-meta">Cinematic Rendering</div>
-                                <h3 class="project-name">Miles Morales</h3>
-                                <p class="project-desc">Spider-Man Miles Morales game-engine rendering and architectural composition gallery.</p>
-                            </div>
-                            <a href="https://rrcee.github.io/milesmorales/" target="_blank" class="project-btn">Visit Site</a>
-                        </div>
-
-                        <div class="project-card glass-panel loading-shimmer" data-index="2">
-                            <div>
-                                <div class="project-meta">Web Ecosystem</div>
-                                <h3 class="project-name">Bronze Wagon</h3>
-                                <p class="project-desc">Custom interactive dashboard hub engineered for a Minecraft SMP community framework.</p>
-                            </div>
-                            <a href="https://rrcee.github.io/bronze-wagon/" target="_blank" class="project-btn">Explore Platform</a>
-                        </div>
-
-                        <div class="project-card glass-panel loading-shimmer" data-index="3">
-                            <div>
-                                <div class="project-meta">Education</div>
-                                <h3 class="project-name">Momentum Labs</h3>
-                                <p class="project-desc">An agile rapid sprint deployment portal designed explicitly for developer course assets.</p>
-                            </div>
-                            <a href="https://rrcee.github.io/MomentumLabs/" target="_blank" class="project-btn">Explore Platform</a>
-                        </div>
-
-                        <div class="project-card glass-panel loading-shimmer" data-index="4">
-                            <div>
-                                <div class="project-meta">Productivity</div>
-                                <h3 class="project-name">Pomo</h3>
-                                <p class="project-desc">A strict telemetry Pomodoro engine tailored specifically for deep work intervals.</p>
-                            </div>
-                            <a href="https://rrcee.github.io/Pomo/" target="_blank" class="project-btn">Explore Platform</a>
-                        </div>
-
-                    </div>
-                </div>
-                
-                <div class="carousel-nav">
-                    <div class="carousel-arrow glass-panel" id="prevBtn">
-                        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-                    </div>
-                    <div class="carousel-arrow glass-panel" id="nextBtn">
-                        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SECTION 3: VISION -->
-        <section id="vision">
-            <h2 class="section-title">Artistic <span>Vision</span></h2>
-            <div class="about-box glass-panel loading-shimmer">
-                <p class="about-para">
-                    People often try to separate me into clean boxes labeling me a <span class="highlight">photographer</span>, a <span class="highlight">video editor</span>, or a <span class="highlight">designer</span>. But those are just execution tools. At my core, I am an <span class="highlight">artist</span>. Whether manipulating framing in a lens, timing a cinematic sequence in post-production, or composing clean interface layouts, my ultimate goal is translating raw atmosphere and concept into balanced structural experiences.
+    <section id="projects" class="projects-section scroll-reveal">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title font-greed-condensed-700">Selected Work</h2>
+                <p class="section-desc">A deep dive into functional systems, interface deployments, and interactive spaces.</p>
+            </div>
+            
+            <div class="projects-carousel-container">
+                <div class="projects-grid">
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/bronze-wagon/" title="Bronze Wagon Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/bronze-wagon/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Interactive Web Experience</span>
+                                <h4 class="project-name">Bronze Wagon</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/fh5/" title="Horizon Showcase Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/fh5/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Immersive Gaming UI</span>
+                                <h4 class="project-name">Horizon Showcase (FH5)</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/milesmorales/" title="Miles Morales Tribute Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/milesmorales/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Creative Motion Design</span>
+                                <h4 class="project-name">Miles Morales Tribute</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/MomentumLabs/" title="MomentumLabs Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/MomentumLabs/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Premium SaaS Layout Concept</span>
+                                <h4 class="project-name">MomentumLabs</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/Pomo/" title="Pomo Productivity Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/Pomo/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Minimalist Application Utility</span>
+                                <h4 class="project-name">Pomo Productivity</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/Dapotribe/" title="Dapotribe Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/Dapotribe/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Culture & Digital Layout Design</span>
+                                <h4 class="project-name">Dapotribe</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/pokedex/" title="Pokédex Minimal Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/pokedex/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Minimalist Data/API Web App</span>
+                                <h4 class="project-name">Pokédex Minimal</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/carsmainly/" title="Carsmainly Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/carsmainly/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Editorial Visual Space</span>
+                                <h4 class="project-name">Carsmainly</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card" data-tilt>
+                        <div class="live-preview-container">
+                            <iframe src="https://rrcee.github.io/mp33/" title="MP33 Engine Preview"></iframe>
+                        </div>
+                        <a href="https://rrcee.github.io/mp33/" target="_blank" class="project-overlay-link">
+                            <div class="project-overlay">
+                                <span class="project-category">Immersive Audio Experience</span>
+                                <h4 class="project-name">MP33 Engine</h4>
+                                <span class="project-action-tag font-area-semibold">Launch Project ↗</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-section scroll-reveal">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title font-greed-condensed-700">Capabilities</h2>
+            </div>
+            <div class="tech-pills-container">
+                <div class="tech-pill scroll-reveal-pill">HTML5 & CSS3 Architecture</div>
+                <div class="tech-pill scroll-reveal-pill">JavaScript (ES6+)</div>
+                <div class="tech-pill scroll-reveal-pill">React Development</div>
+                <div class="tech-pill scroll-reveal-pill">Framer Motion</div>
+                <div class="tech-pill scroll-reveal-pill">Git & GitHub Workflows</div>
+                <div class="tech-pill scroll-reveal-pill">Firebase Integration</div>
+                <div class="tech-pill scroll-reveal-pill">CapCut & DaVinci Resolve</div>
+                <div class="tech-pill scroll-reveal-pill">Adobe Lightroom Rendering</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section scroll-reveal">
+        <div class="about-layout">
+            <div class="about-left">
+                <h2 class="section-title font-greed-condensed-700">Philosophy</h2>
+            </div>
+            <div class="about-right">
+                <p class="about-paragraph font-area-semibold">
+                    Whether I'm building out clean architecture behind the scenes or tuning an entrance animation frame by frame, I focus on crafting premium web experiences that feel amazing to interact with.
+                </p>
+                <p class="about-paragraph secondary">
+                    Design isn't just static composition. It's fluid coordination that structures seamlessly across viewports, merging computational frontend development logic with highly responsive layout systems.
                 </p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SECTION 4: TOOLKIT -->
-        <section id="toolkit">
-            <h2 class="section-title">Creative <span>Mediums</span></h2>
-            <div class="languages-grid">
-                <div class="lang-pill glass-panel loading-shimmer">
-                    <span class="lang-title">Photography & Composition</span>
-                    <span class="lang-proficiency">Visual Framing</span>
-                </div>
-                <div class="lang-pill glass-panel loading-shimmer">
-                    <span class="lang-title">Videography & Motion</span>
-                    <span class="lang-proficiency">Cinematography</span>
-                </div>
-                <div class="lang-pill glass-panel loading-shimmer">
-                    <span class="lang-title">Post-Production Design</span>
-                    <span class="lang-proficiency">Editing & Grading</span>
+    <section id="contact" class="contact-section scroll-reveal">
+        <div class="section-container">
+            <div class="contact-card">
+                <div class="contact-gradient-overlay"></div>
+                <h2 class="contact-title font-greed-condensed-700">Start an Experience</h2>
+                <p class="contact-subtitle">Let's engineer interfaces that look striking and execute smoothly.</p>
+                
+                <div class="contact-links-grid">
+                    <a href="mailto:youremail@domain.com" class="contact-link-item">
+                        <span class="link-label">Email</span>
+                        <span class="link-arrow">↗</span>
+                    </a>
+                    <a href="https://github.com/rrcee" target="_blank" class="contact-link-item">
+                        <span class="link-label">GitHub</span>
+                        <span class="link-arrow">↗</span>
+                    </a>
+                    <a href="https://instagram.com/sherikum.rishi" target="_blank" class="contact-link-item">
+                        <span class="link-label">Instagram</span>
+                        <span class="link-arrow">↗</span>
+                    </a>
+                    <div class="contact-link-item" title="Discord Username: imthatmadman">
+                        <span class="link-label">imthatmadman</span>
+                        <span class="link-arrow">on discord</span>
+                    </div>
                 </div>
             </div>
-        </section>
-
-        <!-- SECTION 5: NETWORK -->
-        <section id="network">
-            <h2 class="section-title">Reach <span>Out</span></h2>
-            <div class="socials-grid">
-                <a href="https://discord.com" target="_blank" class="social-card glass-panel loading-shimmer">
-                    <span class="social-platform">Discord Terminal</span>
-                    <span class="social-handle">imthatmadman</span>
-                </a>
-                <a href="https://instagram.com/sherikum.rishi" target="_blank" class="social-card glass-panel loading-shimmer">
-                    <span class="social-platform">Instagram Profile</span>
-                    <span class="social-handle">sherikum.rishi</span>
-                </a>
-                <a href="https://github.com/rrcee" target="_blank" class="social-card glass-panel loading-shimmer">
-                    <span class="social-platform">GitHub Repository</span>
-                    <span class="social-handle">rrcee</span>
-                </a>
-                <a href="mailto:rishirohith2099@gmail.com" class="social-card glass-panel loading-shimmer">
-                    <span class="social-platform">Direct Email</span>
-                    <span class="social-handle">rishirohith</span>
-                </a>
-            </div>
-        </section>
-
-    </div>
-
-    <footer class="system-footer">
-        &copy; 2026 RISHI ROHITH • VERTICAL SCROLL ARCHITECTURE • ALL RIGHTS RESERVED.
-    </footer>
+            
+            <footer class="footer-bottom">
+                <p>&copy; 2026 Rishi Rohith. </p>
+            </footer>
+        </div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            initNavigationEngine();
+            initScrollRevealEngine();
+            initParallaxAndAmbientEngine();
+            initCard3DTiltEngine();
+        });
+
+        function initNavigationEngine() {
+            const navbar = document.querySelector('.navbar');
+            if (!navbar) return;
             
-            /* --- SCROLLING-TRIGGERED AUDIO ENGINE --- */
-            const bgMusicTrack = document.getElementById('bgMusicTrack');
-            const audioHudTrigger = document.getElementById('audioHudTrigger');
-            let isAudioActivated = false;
-
-            function triggerScrollAudioActivation() {
-                if (isAudioActivated) return;
-                
-                bgMusicTrack.play().then(() => {
-                    isAudioActivated = true;
-                    audioHudTrigger.classList.remove('muted-state');
-                    audioHudTrigger.classList.add('playing-state');
-                    window.removeEventListener('scroll', triggerScrollAudioActivation);
-                }).catch((err) => {
-                    console.log("Autoplay blocked by standard browser constraints. Awaiting direct tap context.");
-                });
-            }
-
-            // Bind audio deployment exclusively to scroll vector mutations
-            window.addEventListener('scroll', triggerScrollAudioActivation, { passive: true });
-
-            // Direct HUD toggle management
-            audioHudTrigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                isAudioActivated = true; // Protect scroll hook from re-firing
-                if (bgMusicTrack.paused) {
-                    bgMusicTrack.play();
-                    audioHudTrigger.classList.remove('muted-state');
-                    audioHudTrigger.classList.add('playing-state');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
                 } else {
-                    bgMusicTrack.pause();
-                    audioHudTrigger.classList.remove('playing-state');
-                    audioHudTrigger.classList.add('muted-state');
+                    navbar.classList.remove('scrolled');
                 }
+            }, { passive: true });
+        }
+
+        function initScrollRevealEngine() {
+            const revealOptions = {
+                root: null,
+                threshold: 0.1,
+                rootMargin: '0px 0px -40px 0px'
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            document.querySelectorAll('.scroll-reveal, .scroll-reveal-text').forEach(el => {
+                revealObserver.observe(el);
             });
 
+            document.querySelectorAll('.scroll-reveal-pill').forEach((pill, index) => {
+                pill.style.transitionDelay = `${index * 0.05}s`;
+                revealObserver.observe(pill);
+            });
+        }
 
-            /* --- LAZY-LOADED SHIMMER RESOLUTION ENGINE --- */
-            const shimmerTargets = document.querySelectorAll('.loading-shimmer');
+        function initParallaxAndAmbientEngine() {
+            const parallaxElements = document.querySelectorAll('[data-parallax-speed]');
+            const ambient1 = document.getElementById('ambient-1');
+            const ambient2 = document.getElementById('ambient-2');
             
-            // Simulates dynamic layout ready state transitions after images/components assemble
-            setTimeout(() => {
-                shimmerTargets.forEach(element => {
-                    element.classList.remove('loading-shimmer');
-                });
-            }, 1400);
-
-
-            /* --- MECHANICAL HAPTIC FEEDBACK SYSTEM --- */
-            function executeMechanicalHapticTick() {
-                if ('vibrate' in navigator) {
-                    // 12ms micro pulse emulating physics-based tactile mechanical resistance clicks
-                    navigator.vibrate(12);
-                }
-            }
-
-
-            /* --- DESKTOP NAVIGATION SIDEBAR HANDLERS --- */
-            const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.getElementById('navLinks');
-            const menuTabs = document.querySelectorAll('.nav-tab');
-
-            menuToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                menuToggle.classList.toggle('menu-open-state');
-                navLinks.classList.toggle('menu-open');
-            });
-
-            document.addEventListener('click', (e) => {
-                if(!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
-                    menuToggle.classList.remove('menu-open-state');
-                    navLinks.classList.remove('menu-open');
-                }
-            });
-
-            menuTabs.forEach(link => {
-                link.addEventListener('click', () => {
-                    menuToggle.classList.remove('menu-open-state');
-                    navLinks.classList.remove('menu-open');
-                });
-            });
-
-
-            /* --- LIVE ACTIVE STATE MOBILE HUD BOTTOM PANEL --- */
-            const targetSections = document.querySelectorAll('section');
-            const mobileHudButtons = document.querySelectorAll('.mobile-hud-btn');
+            let ticking = false;
+            let lastKnownScrollPosition = 0;
 
             window.addEventListener('scroll', () => {
-                let activeSectionId = 'home';
-                const baseScrollOffset = window.scrollY + (window.innerHeight / 3);
+                lastKnownScrollPosition = window.scrollY;
 
-                targetSections.forEach(section => {
-                    if (baseScrollOffset >= section.offsetTop) {
-                        activeSectionId = section.getAttribute('id');
-                    }
-                });
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        if (window.innerWidth > 768) {
+                            parallaxElements.forEach(el => {
+                                const speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0;
+                                const yPos = lastKnownScrollPosition * speed;
+                                el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+                            });
 
-                mobileHudButtons.forEach(btn => {
-                    if (btn.getAttribute('href') === `#${activeSectionId}`) {
-                        btn.classList.add('active-hud-tab');
-                    } else {
-                        btn.classList.remove('active-hud-tab');
-                    }
-                });
-            }, { passive: true });
-
-
-            /* --- IPOD COVERFLOW WORK ENGINE --- */
-            const cards = document.querySelectorAll('.project-card');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const viewport = document.getElementById('carouselViewport');
-            let currentIdx = 0; 
-            let isHoveringActiveCard = false;
-
-            function updateCarousel() {
-                const isMobile = window.innerWidth <= 768;
-                const spacing = isMobile ? 85 : 180; 
-                const zDepth = isMobile ? 40 : 100;
-                const rotationAngle = isMobile ? 45 : 35;
-
-                cards.forEach((card, i) => {
-                    const offset = i - currentIdx;
-                    
-                    if (offset === 0) {
-                        if (!isHoveringActiveCard) {
-                            card.style.transform = `translateX(0px) translateZ(${zDepth}px) rotateX(0deg) rotateY(0deg) scale(1.05)`;
+                            if (ambient1 && ambient2) {
+                                ambient1.style.transform = `translate3d(${lastKnownScrollPosition * 0.05}px, ${lastKnownScrollPosition * 0.03}px, 0)`;
+                                ambient2.style.transform = `translate3d(${lastKnownScrollPosition * -0.04}px, ${lastKnownScrollPosition * -0.05}px, 0)`;
+                            }
                         }
-                        card.style.opacity = '1';
-                        card.style.zIndex = '10';
-                        card.style.pointerEvents = 'auto';
-                    } else if (offset > 0) {
-                        card.style.transform = `translateX(${offset * spacing}px) translateZ(0px) rotateY(-${rotationAngle}deg) scale(0.82)`;
-                        card.style.opacity = offset === 1 ? '0.75' : offset === 2 ? '0.3' : '0';
-                        card.style.zIndex = `${10 - offset}`;
-                        card.style.pointerEvents = 'none';
-                    } else {
-                        card.style.transform = `translateX(${offset * spacing}px) translateZ(0px) rotateY(${rotationAngle}deg) scale(0.82)`;
-                        card.style.opacity = offset === -1 ? '0.75' : offset === -2 ? '0.3' : '0';
-                        card.style.zIndex = `${10 + offset}`;
-                        card.style.pointerEvents = 'none';
-                    }
-                });
-            }
-
-            const shiftPrev = () => { 
-                if (currentIdx > 0) { 
-                    currentIdx--; 
-                    executeMechanicalHapticTick();
-                    resetAndRefreshed(); 
-                } 
-            };
-            
-            const shiftNext = () => { 
-                if (currentIdx < cards.length - 1) { 
-                    currentIdx++; 
-                    executeMechanicalHapticTick();
-                    resetAndRefreshed(); 
-                } 
-            };
-
-            prevBtn.addEventListener('click', shiftPrev);
-            nextBtn.addEventListener('click', shiftNext);
-
-            function resetAndRefreshed() {
-                isHoveringActiveCard = false;
-                updateCarousel();
-            }
-
-            /* --- MOBILE SWIPE DETECTORS --- */
-            let touchStartX = 0;
-            let touchEndX = 0;
-
-            viewport.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-
-            viewport.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipeGesture();
-            }, { passive: true });
-
-            function handleSwipeGesture() {
-                const swipeThreshold = 40; 
-                if (touchStartX - touchEndX > swipeThreshold) {
-                    shiftNext();
-                } else if (touchEndX - touchStartX > swipeThreshold) {
-                    shiftPrev();
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
-            }
+            }, { passive: true });
+        }
 
-            cards.forEach((card, index) => {
-                card.addEventListener('click', (e) => {
-                    if (index !== currentIdx) {
-                        e.preventDefault();
-                        currentIdx = index;
-                        executeMechanicalHapticTick();
-                        resetAndRefreshed();
-                    }
-                });
-            });
+        function initCard3DTiltEngine() {
+            const tiltCards = document.querySelectorAll('[data-tilt]');
 
-            updateCarousel();
-            window.addEventListener('resize', updateCarousel);
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    if (window.innerWidth <= 768) return;
 
-
-            /* --- PARALLAX PERSPECTIVE SHIFTS (DESKTOP INTERACTIVE MOUSE MATRIX) --- */
-            const gridBg = document.getElementById('parallaxGrid');
-            const allPanels = document.querySelectorAll('.glass-panel');
-
-            window.addEventListener('mousemove', (e) => {
-                if (window.innerWidth <= 768) return;
-
-                const bgX = (e.clientX / window.innerWidth) - 0.5;
-                const bgY = (e.clientY / window.innerHeight) - 0.5;
-                gridBg.style.transform = `translateZ(-100px) translateX(${-bgX * 25}px) translateY(${-bgY * 25}px)`;
-
-                allPanels.forEach((panel) => {
-                    const isCarouselCard = panel.classList.contains('project-card');
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
                     
-                    if (isCarouselCard) {
-                        const cardIndex = parseInt(panel.getAttribute('data-index'));
-                        if (cardIndex !== currentIdx) return;
-                    }
+                    const xc = rect.width / 2;
+                    const yc = rect.height / 2;
+                    
+                    const tiltX = (yc - y) / 14;
+                    const tiltY = (x - xc) / 14;
 
-                    const rect = panel.getBoundingClientRect();
-                    const localX = e.clientX - rect.left;
-                    const localY = e.clientY - rect.top;
+                    card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
 
-                    if (localX >= 0 && localX <= rect.width && localY >= 0 && localY <= rect.height) {
-                        if (isCarouselCard) isHoveringActiveCard = true;
-
-                        const xVector = (localX / rect.width) - 0.5;
-                        const yVector = (localY / rect.height) - 0.5;
-
-                        let baseTranslateZ = isCarouselCard ? 'translateZ(140px)' : 'translateZ(40px)';
-                        let baseScale = isCarouselCard ? 'scale(1.08)' : 'scale(1.03)';
-                        let baseTranslateX = isCarouselCard ? 'translateX(0px)' : '';
-
-                        panel.style.transform = `${baseTranslateX} ${baseTranslateZ} rotateX(${-yVector * 20}deg) rotateY(${xVector * 20}deg) ${baseScale}`;
-                    } else {
-                        if (isCarouselCard && isHoveringActiveCard) {
-                            isHoveringActiveCard = false;
-                            updateCarousel();
-                        } else if (!isCarouselCard) {
-                            panel.style.transform = '';
-                        }
-                    }
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
                 });
             });
-
-            allPanels.forEach((panel) => {
-                panel.addEventListener('mouseleave', () => {
-                    const isCarouselCard = panel.classList.contains('project-card');
-                    if (isCarouselCard) {
-                        isHoveringActiveCard = false;
-                        updateCarousel();
-                    } else {
-                        panel.style.transform = '';
-                    }
-                });
-            });
-        });
+        }
     </script>
 </body>
 </html>
